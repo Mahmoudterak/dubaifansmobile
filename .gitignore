@@ -1,0 +1,97 @@
+# Secrets
+.env
+.env.*
+!.env.example
+admin/.env.local
+
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Build outputs
+dist/
+**/dist/
+.next/
+**/.next/
+.expo/
+**/.expo/
+
+# Expo / EAS
+.eas/
+*.aab
+*.apk
+*.ipa
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Local/runtime files
+.DS_Store
+Thumbs.db
+
+# Backups and database dumps
+*.sql
+*.sql.gz
+backup/
+backups/
+
+# Temporary files
+*.tmp
+*.temp
+
+# Runtime / local data
+postgres/
+storage/
+
+# Temporary asset packages
+*.zip
+
+# Mobile signing credentials
+*.jks
+*.keystore
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.pem
+
+# Local backup copies
+*.backup
+*.save
+
+# Git internal backups
+mobile-git-backup.tar.gz
+mobile-git-internal-backup/
+
+# Mobile temporary / accidental files
+mobile/App.tsx.before-*
+mobile/PY
+mobile/advertising,
+mobile/advertising?:
+mobile/ecommerce,
+mobile/ecommerce?:
+mobile/followers,
+mobile/followers?:
+mobile/from
+mobile/if
+mobile/marker
+mobile/new
+mobile/old
+mobile/onOpenService,
+mobile/seo,
+mobile/seo?:
+mobile/services,
+mobile/services:
+mobile/servicesLoading,
+mobile/servicesLoading:
+mobile/token,
+mobile/token:
+mobile/user,
+mobile/user:
+mobile/website,
+mobile/website?:
+
+docker-compose.yml.backup-*

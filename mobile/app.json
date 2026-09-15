@@ -1,0 +1,32 @@
+{
+  "expo": {
+    "name": "Dubai Fans",
+    "slug": "dubaifansmobile",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "predictiveBackGestureEnabled": false,
+      "package": "com.dubaifans.app"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-secure-store",
+      "expo-web-browser",
+      "@react-native-google-signin/google-signin"
+    ],
+    "scheme": "dubaifans",
+    "extra": {
+      "eas": {
+        "projectId": "2ab72637-7849-4c84-877d-a3e53b99dca2"
+      }
+    },
+    "owner": "mahmoudterks-team"
+  }
+}

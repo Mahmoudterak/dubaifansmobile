@@ -1,0 +1,209 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                     String    @id @default(uuid())
+  email                  String    @unique
+  password               String
+  googleId               String?   @unique
+  passwordResetTokenHash String?
+  passwordResetExpiresAt DateTime?
+  name                   String?
+  phone                  String?
+  businessName           String?
+  businessType           String?
+  websiteUrl             String?
+  instagramUrl           String?
+  facebookUrl            String?
+  tiktokUrl              String?
+  snapchatUrl            String?
+  googleBusinessUrl      String?
+  role                   UserRole  @default(CUSTOMER)
+  isActive               Boolean   @default(true)
+  createdAt              DateTime  @default(now())
+  updatedAt              DateTime  @updatedAt
+
+  orders        Order[]
+  notifications Notification[]
+}
+
+model Service {
+  id          String      @id @default(uuid())
+  name        String
+  slug        String      @unique
+  description String?
+  type        ServiceType
+  pricingType PricingType
+  icon        String?
+  isActive    Boolean     @default(true)
+  sortOrder   Int         @default(0)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  packages ServicePackage[]
+  orders   Order[]
+}
+
+model ServicePackage {
+  id          String   @id @default(uuid())
+  serviceId   String
+  slug        String
+  name        String
+  description String?
+  price       Decimal  @db.Decimal(10, 2)
+  unit        String?
+  quantity    Int?
+  isActive    Boolean  @default(true)
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  service Service @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  orders  Order[]
+
+  @@unique([serviceId, slug])
+  @@index([serviceId])
+}
+
+model Order {
+  id           String      @id @default(uuid())
+  orderNo      String      @unique
+  userId       String
+  serviceId    String
+  packageId    String?
+  status       OrderStatus @default(PENDING_PAYMENT)
+  quantity     Int?
+  unitPrice    Decimal     @db.Decimal(10, 2)
+  subtotal     Decimal     @db.Decimal(10, 2)
+  vat          Decimal     @default(0) @db.Decimal(10, 2)
+  total        Decimal     @db.Decimal(10, 2)
+  customerNote String?
+  formData     Json?
+  campaignData Json?
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+
+  user          User            @relation(fields: [userId], references: [id])
+  service       Service         @relation(fields: [serviceId], references: [id])
+  package       ServicePackage? @relation(fields: [packageId], references: [id])
+  history       OrderHistory[]
+  payments      Payment[]
+  notifications Notification[]
+
+  @@index([userId])
+  @@index([serviceId])
+  @@index([status])
+  @@index([createdAt])
+}
+
+model OrderHistory {
+  id        String      @id @default(uuid())
+  orderId   String
+  status    OrderStatus
+  note      String?
+  changedBy String?
+  createdAt DateTime    @default(now())
+
+  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@index([orderId])
+  @@index([createdAt])
+}
+
+model Payment {
+  id              String          @id @default(uuid())
+  orderId         String
+  provider        PaymentProvider @default(ZIINA)
+  paymentIntentId String          @unique
+  operationId     String          @unique
+  amount          Decimal         @db.Decimal(10, 2)
+  currency        String          @default("AED")
+  status          PaymentStatus   @default(PENDING)
+  redirectUrl     String?
+  embeddedUrl     String?
+  failureMessage  String?
+  completedAt     DateTime?
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@index([orderId])
+  @@index([status])
+  @@index([createdAt])
+}
+
+model Notification {
+  id        String       @id @default(uuid())
+  userId    String
+  orderId   String?
+  title     String
+  message   String
+  status    OrderStatus?
+  isRead    Boolean      @default(false)
+  createdAt DateTime     @default(now())
+
+  user  User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  order Order? @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@index([userId, isRead])
+  @@index([userId, createdAt])
+  @@index([orderId])
+}
+
+enum UserRole {
+  CUSTOMER
+  EMPLOYEE
+  MANAGER
+  ADMIN
+}
+
+enum ServiceType {
+  ADVERTISING
+  FOLLOWERS
+  VIEWS_LIKES
+  WEBSITE
+  ECOMMERCE
+  SEO_GOOGLE
+  SOCIAL_MEDIA
+  PHOTOGRAPHY
+  CUSTOM
+}
+
+enum PricingType {
+  FIXED
+  PER_DAY
+  PACKAGE
+  QUOTE
+}
+
+enum PaymentProvider {
+  ZIINA
+}
+
+enum PaymentStatus {
+  PENDING
+  REQUIRES_ACTION
+  COMPLETED
+  FAILED
+  CANCELED
+}
+
+enum OrderStatus {
+  DRAFT
+  PENDING_PAYMENT
+  PAID
+  UNDER_REVIEW
+  IN_PROGRESS
+  WAITING_FOR_CUSTOMER
+  REVISION
+  COMPLETED
+  CANCELLED
+  REFUNDED
+}
