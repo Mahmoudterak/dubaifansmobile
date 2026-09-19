@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#e8e6e1;font-family:'IBM Plex Sans Arabic',system-ui,sans-serif}
+a{color:#E31B23}a:hover{color:#B3151B}
+*{-webkit-tap-highlight-color:transparent}
+::-webkit-scrollbar{width:0;height:0}
+@keyframes dfIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes dfPop{from{opacity:0;transform:scale(.86)}to{opacity:1;transform:scale(1)}}
+@keyframes dfGlow{0%,100%{opacity:.5}50%{opacity:1}}
+</style>
+</helmet>
+<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:40px 20px;box-sizing:border-box">
+<x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="402px,874px">
+<div style="height:874px;display:flex;flex-direction:column;background:#F6F7F9;direction:rtl;font-family:'IBM Plex Sans Arabic',system-ui,sans-serif;color:#111827">
+
+<sc-if value="{{ isSplash }}" hint-placeholder-val="{{ true }}">
+<div style="flex:1;background:linear-gradient(180deg,#050A18 0%,#0B1428 46%,#101B33 100%);display:flex;flex-direction:column;align-items:center;padding:96px 26px 34px;box-sizing:border-box;position:relative;overflow:hidden">
+<div style="position:absolute;top:60px;width:230px;height:230px;border-radius:99px;background:rgba(227,27,35,.22);filter:blur(46px);animation:dfGlow 3.2s ease-in-out infinite"></div>
+<img src="mobile/assets/dubai_fans_logo.png" alt="Dubai Fans" style="width:108px;height:108px;border-radius:30px;position:relative;box-shadow:0 18px 50px rgba(227,27,35,.45)">
+<div style="font-size:35px;font-weight:700;color:#fff;margin-top:22px;letter-spacing:-.5px">Dubai Fans</div>
+<div style="font-size:15px;color:#D8DEEA;margin-top:6px">شريكك للنمو الرقمي والتسويق</div>
+<div style="width:190px;height:1px;background:linear-gradient(90deg,transparent,#D4AF37,transparent);margin:22px 0 20px"></div>
+<div style="display:flex;width:100%;justify-content:space-between">
+<sc-for list="{{ splashFeatures }}" as="f" hint-placeholder-count="4">
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:7px;border-left:1px solid rgba(255,255,255,.1)">
+<div style="font-size:17px;color:#D4AF37">{{ f.glyph }}</div>
+<div style="font-size:11.5px;color:#E5E9F0;font-weight:500">{{ f.label }}</div>
+</div>
+</sc-for>
+</div>
+<div style="flex:1"></div>
+<div style="width:100%;height:14px;border-radius:99px;background:rgba(255,255,255,.07);border:1px solid rgba(212,175,55,.35);padding:2px;box-sizing:border-box">
+<div style="height:100%;width:64%;border-radius:99px;background:linear-gradient(90deg,#8A6A14,#F0CE5A)"></div>
+</div>
+<div style="font-size:13px;color:#D8DEEA;margin-top:12px">جاري التحميل ...</div>
+<div onClick="{{ goLogin }}" style="margin-top:26px;font-size:11px;letter-spacing:4px;color:#9BA7BD;cursor:pointer">GROW YOUR BUSINESS IN DUBAI</div>
+<div style="width:190px;height:2px;background:#D4AF37;margin-top:10px"></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isLogin }}" hint-placeholder-val="{{ false }}">
+<div style="flex:1;overflow:auto;padding:64px 22px 30px;display:flex;flex-direction:column;align-items:center;animation:dfIn .3s ease both">
+<img src="mobile/assets/dubai_fans_logo.png" alt="Dubai Fans" style="width:96px;height:96px;border-radius:26px">
+<div style="font-size:30px;font-weight:700;margin-top:16px">Dubai Fans</div>
+<div style="font-size:13.5px;color:#6B7280;margin-top:5px">شريكك للنمو الرقمي والتسويق</div>
+<div style="width:100%;margin-top:26px;background:#fff;border:1px solid #EFF1F4;border-radius:22px;padding:22px;box-sizing:border-box;display:flex;flex-direction:column;gap:14px">
+<div style="font-size:21px;font-weight:700">تسجيل الدخول</div>
+<div>
+<div style="font-size:13px;font-weight:500;margin-bottom:8px">البريد الإلكتروني</div>
+<input value="{{ email }}" onInput="{{ onEmail }}" placeholder="name@example.com" style="width:100%;box-sizing:border-box;border:1px solid #EDEFF2;background:#F7F8FA;border-radius:13px;padding:14px;font-family:inherit;font-size:14px;outline:none;text-align:center;color:#111827">
+</div>
+<div>
+<div style="font-size:13px;font-weight:500;margin-bottom:8px">كلمة المرور</div>
+<input type="password" value="{{ pass }}" onInput="{{ onPass }}" placeholder="••••••••" style="width:100%;box-sizing:border-box;border:1px solid #EDEFF2;background:#F7F8FA;border-radius:13px;padding:14px;font-family:inherit;font-size:14px;outline:none;text-align:center;color:#111827">
+</div>
+<div onClick="{{ doLogin }}" style="padding:16px;border-radius:14px;background:#E31B23;color:#fff;font-size:15px;font-weight:700;text-align:center;cursor:pointer" style-hover="background:#C8151C">دخول</div>
+<div onClick="{{ doLogin }}" style="padding:15px;border-radius:14px;border:1px solid #E5E7EB;background:#fff;display:flex;align-items:center;justify-content:center;gap:9px;cursor:pointer" style-hover="border-color:#D1D5DB">
+<img src="mobile/assets/icons/google.png" alt="" style="width:19px;height:19px;object-fit:contain">
+<span style="font-size:14px;font-weight:600">المتابعة باستخدام Google</span>
+</div>
+<div style="text-align:center;font-size:13px;font-weight:600;color:#E31B23;cursor:pointer">نسيت كلمة المرور؟</div>
+<div style="height:1px;background:#F1F2F5;margin-top:2px"></div>
+<div style="text-align:center;font-size:13px;color:#6B7280">ليس لديك حساب؟ <span style="color:#E31B23;font-weight:700;cursor:pointer">إنشاء حساب</span></div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ showChrome }}" hint-placeholder-val="{{ false }}">
+<div style="flex:none;padding:58px 16px 12px;background:#fff;border-bottom:1px solid #EFF1F4;display:flex;align-items:center;gap:10px;position:relative;z-index:5">
+<sc-if value="{{ canBack }}" hint-placeholder-val="{{ false }}">
+<div onClick="{{ onBack }}" style="width:36px;height:36px;border-radius:12px;background:#F3F4F6;display:flex;align-items:center;justify-content:center;font-size:17px;cursor:pointer;flex:none" style-hover="background:#E5E7EB">›</div>
+</sc-if>
+<sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+<img src="mobile/assets/dubai_fans_logo.png" alt="Dubai Fans" style="width:40px;height:40px;border-radius:12px;flex:none">
+</sc-if>
+<div style="flex:1;min-width:0">
+<div style="font-size:17px;font-weight:700;line-height:1.3">{{ headerTitle }}</div>
+<div style="font-size:12px;color:#6B7280;line-height:1.45">{{ headerSub }}</div>
+</div>
+<sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+<div onClick="{{ goNotifications }}" style="width:38px;height:38px;border-radius:13px;background:#FFFBEB;border:1px solid #FDE68A;display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none;position:relative" style-hover="background:#FEF3C7">
+<span style="font-size:15px;color:#B45309">◔</span>
+<span style="position:absolute;top:5px;left:6px;width:8px;height:8px;border-radius:99px;background:#E31B23;border:1.5px solid #fff"></span>
+</div>
+</sc-if>
+<sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+<div onClick="{{ goAccount }}" style="width:38px;height:38px;border-radius:13px;background:#F3F4F6;display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none;font-size:14px;font-weight:700;color:#4B5563" style-hover="background:#E5E7EB">M</div>
+</sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ showBody }}" hint-placeholder-val="{{ false }}">
+<div style="flex:1;overflow:auto;overflow-x:hidden">
+
+<sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+<div style="padding:14px 16px 28px;display:flex;flex-direction:column;gap:24px;animation:dfIn .28s ease both">
+
+<div style="background:#fff;border:1px solid #EFF1F4;border-radius:20px;padding:16px;display:flex;flex-direction:column;gap:13px">
+<div style="display:flex;align-items:center;gap:12px">
+<div style="width:46px;height:46px;border-radius:15px;background:#FFF1F2;display:flex;align-items:center;justify-content:center;font-size:19px;color:#E31B23;flex:none">◬</div>
+<div style="flex:1;min-width:0">
+<div style="font-size:16px;font-weight:700">حالة نمو مشروعك</div>
+<div style="font-size:12.5px;color:#6B7280;margin-top:2px">التحليل غير متاح حاليا</div>
+</div>
+</div>
+<div style="background:#F7F8FA;border-radius:13px;padding:14px;font-size:12.5px;color:#6B7280;text-align:center">سنعرض تحليل نمو مشروعك هنا عند توفر البيانات.</div>
+<div onClick="{{ goCampaigns }}" style="padding:15px;border-radius:14px;background:#111827;color:#fff;font-size:14px;font-weight:700;text-align:center;cursor:pointer" style-hover="background:#0B1220">عرض التحليل</div>
+</div>
+
+<div>
+<div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:10px">
+<div style="font-size:18px;font-weight:700">أداء آخر ٣٠ يوم</div>
+<div style="font-size:12px;color:#6B7280">تحديث قبل ساعة</div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+<sc-for list="{{ stats }}" as="s">
+<div style="background:#fff;border:1px solid #EFF1F4;border-radius:16px;padding:13px;display:flex;flex-direction:column;gap:8px">
+<div style="display:flex;align-items:center;gap:8px">
+<div style="width:26px;height:26px;background-size:contain;background-repeat:no-repeat;background-position:center;background-image:{{ s.iconCss }}"></div>
+<div style="font-size:12px;color:#6B7280;font-weight:500">{{ s.label }}</div>
+</div>
+<div style="display:flex;align-items:baseline;gap:7px">
+<div style="font-size:20px;font-weight:700;letter-spacing:-.3px">{{ s.value }}</div>
+<div style="font-size:11px;font-weight:700;color:#16A34A">{{ s.delta }}</div>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div>
+<div style="font-size:18px;font-weight:700">ماذا تريد أن تفعل؟</div>
+<div style="font-size:12.5px;color:#6B7280;margin-top:3px;margin-bottom:12px">اختر الخطوة التي تريد تنفيذها الآن.</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:11px">
+<sc-for list="{{ quickActions }}" as="q" hint-placeholder-count="4">
+<div onClick="{{ q.go }}" style="background:#fff;border:1px solid #EFF1F4;border-radius:18px;padding:15px;display:flex;flex-direction:column;gap:9px;cursor:pointer" style-hover="border-color:#FCA5A5">
+<div style="width:42px;height:42px;border-radius:14px;background:#FFF1F2;display:flex;align-items:center;justify-content:center;font-size:18px;color:#E31B23">{{ q.glyph }}</div>
+<div style="font-size:15px;font-weight:700">{{ q.title }}</div>
+<div style="font-size:11.5px;color:#6B7280;line-height:1.5">{{ q.sub }}</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div>
+<div style="font-size:18px;font-weight:700">أدوات مجانية</div>
+<div style="font-size:12.5px;color:#6B7280;margin-top:3px;margin-bottom:12px">أدوات عملية تساعدك على حساب مؤشراتك التسويقية.</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:11px">
+<sc-for list="{{ freeTools }}" as="t" hint-placeholder-count="2">
+<div onClick="{{ t.go }}" style="background:#fff;border:1px solid #EFF1F4;border-radius:18px;padding:15px;display:flex;flex-direction:column;gap:9px;cursor:pointer" style-hover="border-color:#D1D5DB">
+<div style="width:42px;height:42px;border-radius:14px;background:#FFF1F2;display:flex;align-items:center;justify-content:center;font-size:17px;color:#E31B23">{{ t.glyph }}</div>
+<div style="font-size:14.5px;font-weight:700">{{ t.title }}</div>
+<div style="font-size:11.5px;color:#6B7280;line-height:1.5">{{ t.sub }}</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div>
+<div style="display:flex;gap:10px;overflow-x:auto;margin:0 -16px;padding:0 16px 2px;scroll-snap-type:x mandatory">
+<sc-for list="{{ banners }}" as="b" hint-placeholder-count="2">
+<div style="flex:none;width:314px;scroll-snap-align:center;border-radius:16px;overflow:hidden;background:{{ b.bg }};padding:16px;box-sizing:border-box;display:flex;flex-direction:column;gap:9px;min-height:132px;position:relative">
+<div style="position:absolute;top:-40px;left:-30px;width:130px;height:130px;border-radius:99px;border:20px solid rgba(212,175,55,.13)"></div>
+<div style="font-size:10px;letter-spacing:2px;color:#D4AF37;font-weight:700">{{ b.eyebrow }}</div>
+<div style="font-size:18px;font-weight:700;color:#fff;line-height:1.4;max-width:220px">{{ b.title }}</div>
+<div style="font-size:11.5px;color:#C8CEDA;line-height:1.55;max-width:230px">{{ b.sub }}</div>
+<div style="margin-top:auto;align-self:flex-start;padding:8px 14px;border-radius:10px;background:#E31B23;color:#fff;font-size:12px;font-weight:700;cursor:pointer">{{ b.cta }}</div>
+</div>
+</sc-for>
+</div>
+<div style="display:flex;gap:6px;justify-content:center;margin-top:10px">
+<span style="width:22px;height:6px;border-radius:99px;background:#E31B23"></span>
+<span style="width:6px;height:6px;border-radius:99px;background:#D8DBE0"></span>
+</div>
+</div>
+
+<div style="background:#fff;border:1px solid #EFF1F4;border-radius:20px;padding:18px;display:flex;flex-direction:column;gap:14px">
+<div>
+<div style="font-size:11px;letter-spacing:1.6px;font-weight:700;color:#E31B23">DUBAI FANS</div>
+<div style="font-size:21px;font-weight:700;margin-top:6px">لماذا دبي فانز؟</div>
+<div style="font-size:13px;color:#374151;margin-top:6px;line-height:1.6">أطلق إعلانك بنفسك … ابتداءً من ٨٠ درهم لليوم</div>
+</div>
+<div style="display:flex;gap:0">
+<sc-for list="{{ whySteps }}" as="w" hint-placeholder-count="3">
+<div style="flex:1;padding:0 9px;border-left:1px solid #F1F2F5;display:flex;flex-direction:column;align-items:center;text-align:center;gap:7px">
+<div style="width:26px;height:26px;border-radius:99px;background:#E31B23;color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center">{{ w.n }}</div>
+<div style="font-size:13px;font-weight:700">{{ w.title }}</div>
+<div style="font-size:11px;color:#6B7280;line-height:1.55">{{ w.sub }}</div>
+</div>
+</sc-for>
+</div>
+<div onClick="{{ goCampaign }}" style="padding:16px;border-radius:15px;background:#E31B23;color:#fff;font-size:15px;font-weight:700;text-align:center;cursor:pointer" style-hover="background:#C8151C">ابدأ حملتك الآن</div>
+</div>
+
+<div>
+<div style="font-size:18px;font-weight:700;margin-bottom:12px">الخدمات الأكثر طلبًا</div>
+<div style="display:flex;gap:11px;overflow-x:auto;margin:0 -16px;padding:0 16px 4px">
+<sc-for list="{{ topServices }}" as="t" hint-placeholder-count="3">
+<div onClick="{{ t.open }}" style="flex:none;width:168px;background:#fff;border:1px solid #EFF1F4;border-radius:18px;overflow:hidden;cursor:pointer" style-hover="border-color:#FCA5A5">
+<div style="height:112px;position:relative;background:repeating-linear-gradient(135deg,#EEF0F4 0 9px,#E4E7ED 9px 18px);display:flex;align-items:center;justify-content:center">
+<div style="font:500 9.5px ui-monospace,Menlo,monospace;color:#8A93A3;letter-spacing:.4px">{{ t.shot }}</div>
+<div style="position:absolute;top:10px;right:10px;padding:5px 11px;border-radius:99px;background:rgba(17,24,39,.86);color:#fff;font-size:10.5px;font-weight:600">دبي فانز</div>
+</div>
+<div style="padding:12px;display:flex;flex-direction:column;gap:7px">
+<div style="font-size:13.5px;font-weight:700;line-height:1.4">{{ t.name }}</div>
+<div style="font-size:13px;font-weight:700;color:#E31B23">{{ t.price }}</div>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div>
+<div style="font-size:18px;font-weight:700">معلومات تهم مشروعك</div>
+<div style="font-size:12.5px;color:#6B7280;margin-top:3px;margin-bottom:12px">مقالات وأفكار تساعدك على تطوير مشروعك وتسويقك الرقمي.</div>
+<div style="display:flex;gap:11px;overflow-x:auto;margin:0 -16px;padding:0 16px 4px">
+<sc-for list="{{ articles }}" as="a" hint-placeholder-count="2">
+<div style="flex:none;width:262px;background:#fff;border:1px solid #EFF1F4;border-radius:18px;overflow:hidden;cursor:pointer" style-hover="border-color:#D1D5DB">
+<div style="height:128px;background:repeating-linear-gradient(135deg,#E9EDF3 0 9px,#DFE4EC 9px 18px);display:flex;align-items:center;justify-content:center">
+<div style="font:500 9.5px ui-monospace,Menlo,monospace;color:#8A93A3">{{ a.shot }}</div>
+</div>
+<div style="padding:14px;display:flex;flex-direction:column;gap:10px">
+<div style="font-size:14px;font-weight:700;line-height:1.55;text-wrap:pretty">{{ a.title }}</div>
+<div style="font-size:12.5px;font-weight:700;color:#E31B23">اقرأ المقال ←</div>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div>
+<div style="display:flex;align-items:baseline;justify-content:space-between">
+<div style="font-size:18px;font-weight:700">تصفح الخدمات</div>
+<div onClick="{{ goServices }}" style="font-size:13px;font-weight:700;color:#E31B23;cursor:pointer">عرض الكل</div>
+</div>
+<div style="font-size:12.5px;color:#6B7280;margin-top:3px;margin-bottom:12px">كل خدمات التسويق التي يحتاجها مشروعك في مكان واحد.</div>
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:9px">
+<sc-for list="{{ allServices }}" as="s" hint-placeholder-count="9">
+<div onClick="{{ s.open }}" style="background:#fff;border:1px solid #EFF1F4;border-radius:15px;padding:10px 7px;display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;text-align:center" style-hover="border-color:#FCA5A5">
+<div style="width:38px;height:38px;border-radius:12px;background:#FFF1F2;display:flex;align-items:center;justify-content:center;font-size:16px;color:#E31B23">{{ s.glyph }}</div>
+<div style="font-size:10.5px;font-weight:600;line-height:1.4">{{ s.short }}</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+
+<div>
+<div style="display:flex;align-items:center;gap:12px">
+<div style="font-size:18px;font-weight:700;flex:none">شركاؤنا</div>
+<div style="flex:1;height:1px;background:#E5E7EB"></div>
+</div>
+<div style="font-size:12.5px;color:#6B7280;margin-top:4px;margin-bottom:12px">أكثر من ١٬٠٠٠ مشروع في الإمارات ودول الخليج</div>
+<div style="display:flex;gap:10px;overflow-x:auto;margin:0 -16px;padding:0 16px 4px">
+<sc-for list="{{ partners }}" as="p" hint-placeholder-count="4">
+<div style="flex:none;width:118px;height:74px;background:#fff;border:1px solid #EFF1F4;border-radius:14px;display:flex;align-items:center;justify-content:center">
+<div style="font:500 9.5px ui-monospace,Menlo,monospace;color:#9AA2B0;text-align:center;padding:0 8px">{{ p }}</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div>
+<div style="font-size:18px;font-weight:700;margin-bottom:10px">تابعنا</div>
+<div style="display:flex;gap:10px">
+<sc-for list="{{ socials }}" as="so">
+<div style="flex:1;background:#fff;border:1px solid #EFF1F4;border-radius:15px;padding:12px;display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="border-color:#D1D5DB">
+<div style="width:24px;height:24px;background-size:contain;background-repeat:no-repeat;background-position:center;background-image:{{ so.iconCss }}"></div>
+</div>
+</sc-for>
+</div>
+</div>
+
+</div>
+</sc-if>
+
+<sc-if value="{{ isServices }}" hint-placeholder-val="{{ false }}">
+<div style="padding:14px 16px 28px;display:flex;flex-direction:column;gap:13px;animation:dfIn .28s ease both">
+<div style="display:flex;align-items:center;gap:9px;background:#fff;border:1px solid #E5E7EB;border-radius:14px;padding:12px 13px">
+<span style="font-size:14px;color:#9CA3AF">◌</span>
+<input value="{{ query }}" onInput="{{ onQuery }}" placeholder="ابحث عن خدمة…" style="flex:1;border:none;outline:none;font-family:inherit;font-size:13.5px;background:transparent;color:#111827;direction:rtl">
+</div>
+<div style="display:flex;gap:8px;overflow-x:auto;margin:0 -16px;padding:0 16px 2px">
+<sc-for list="{{ cats }}" as="c">
+<div onClick="{{ c.pick }}" style="flex:none;padding:8px 14px;border-radius:99px;font-size:12.5px;font-weight:600;cursor:pointer;background:{{ c.bg }};color:{{ c.fg }};border:1px solid {{ c.bd }}">{{ c.label }}</div>
+</sc-for>
+</div>
+<div style="display:flex;flex-direction:column;gap:10px">
+<sc-for list="{{ listServices }}" as="s" hint-placeholder-count="6">
+<div onClick="{{ s.open }}" style="background:#fff;border:1px solid #EFF1F4;border-radius:17px;padding:14px;display:flex;align-items:center;gap:13px;cursor:pointer" style-hover="border-color:#FCA5A5">
+<div style="width:44px;height:44px;border-radius:14px;background:#FFF1F2;display:flex;align-items:center;justify-content:center;font-size:19px;color:#E31B23;flex:none">{{ s.glyph }}</div>
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:3px">
+<div style="font-size:14px;font-weight:600">{{ s.name }}</div>
+<div style="font-size:11.5px;color:#6B7280;line-height:1.45">{{ s.tag }}</div>
+</div>
+<div style="text-align:left;flex:none;display:flex;flex-direction:column;gap:3px;align-items:flex-end">
+<div style="font-size:13px;font-weight:700;color:#E31B23;white-space:nowrap">{{ s.price }}</div>
+<div style="font-size:10.5px;color:#9CA3AF;white-space:nowrap">{{ s.unit }}</div>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isDetail }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-direction:column;animation:dfIn .28s ease both">
+<div style="position:relative;height:150px;background:linear-gradient(200deg,#111827 30%,#7E0F14 100%)">
+<div style="position:absolute;top:-46px;right:-30px;width:150px;height:150px;border-radius:99px;border:22px solid rgba(212,175,55,.14)"></div>
+<div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(17,24,39,.72),rgba(17,24,39,0) 70%)"></div>
+<div style="position:absolute;right:18px;bottom:16px;left:18px;display:flex;align-items:flex-end;justify-content:space-between;gap:12px">
+<div>
+<div style="font-size:20px;font-weight:700;color:#fff">{{ svcName }}</div>
+<div style="font-size:12px;color:#D1D5DB;margin-top:4px">{{ svcTag }}</div>
+</div>
+<div style="padding:6px 11px;border-radius:99px;background:rgba(212,175,55,.2);border:1px solid rgba(212,175,55,.5);font-size:11px;font-weight:600;color:#D4AF37;flex:none">تسليم سريع</div>
+</div>
+</div>
+<div style="padding:16px 16px 20px;display:flex;flex-direction:column;gap:18px">
+<div style="font-size:13.5px;line-height:1.8;color:#374151;text-wrap:pretty">{{ svcDesc }}</div>
+<div style="display:flex;gap:9px">
+<sc-for list="{{ svcPerks }}" as="p" hint-placeholder-count="3">
+<div style="flex:1;background:#fff;border:1px solid #EFF1F4;border-radius:14px;padding:12px 9px;text-align:center">
+<div style="font-size:13px;font-weight:700">{{ p.v }}</div>
+<div style="font-size:10.5px;color:#6B7280;margin-top:3px">{{ p.k }}</div>
+</div>
+</sc-for>
+</div>
+<div>
+<div style="font-size:16px;font-weight:700;margin-bottom:11px">اختر الباقة</div>
+<div style="display:flex;flex-direction:column;gap:9px">
+<sc-for list="{{ packages }}" as="p" hint-placeholder-count="4">
+<div onClick="{{ p.pick }}" style="background:{{ p.bg }};border:1.5px solid {{ p.bd }};border-radius:16px;padding:14px;display:flex;align-items:center;gap:12px;cursor:pointer">
+<div style="width:20px;height:20px;border-radius:99px;border:2px solid {{ p.dotBd }};display:flex;align-items:center;justify-content:center;flex:none">
+<sc-if value="{{ p.on }}" hint-placeholder-val="{{ false }}">
+<span style="width:10px;height:10px;border-radius:99px;background:#E31B23;animation:dfPop .16s ease both"></span>
+</sc-if>
+</div>
+<div style="flex:1;min-width:0">
+<div style="font-size:14px;font-weight:600">{{ p.name }}</div>
+<div style="font-size:11.5px;color:#6B7280;margin-top:2px">{{ p.note }}</div>
+</div>
+<div style="font-size:14.5px;font-weight:700;flex:none">{{ p.price }}</div>
+</div>
+</sc-for>
+</div>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isCheckout }}" hint-placeholder-val="{{ false }}">
+<div style="padding:16px 16px 20px;display:flex;flex-direction:column;gap:18px;animation:dfIn .28s ease both">
+<div style="background:#fff;border:1px solid #EFF1F4;border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:12px">
+<div style="display:flex;align-items:center;gap:12px">
+<div style="width:44px;height:44px;border-radius:14px;background:#FFF1F2;display:flex;align-items:center;justify-content:center;font-size:19px;color:#E31B23">{{ svcGlyph }}</div>
+<div style="flex:1;min-width:0">
+<div style="font-size:14px;font-weight:700">{{ svcName }}</div>
+<div style="font-size:11.5px;color:#6B7280;margin-top:2px">{{ pkgName }}</div>
+</div>
+</div>
+<div style="height:1px;background:#F1F2F5"></div>
+<div style="display:flex;justify-content:space-between;font-size:13px;color:#6B7280"><span>سعر الباقة</span><span style="color:#111827;font-weight:700">{{ pkgPrice }}</span></div>
+<div style="display:flex;justify-content:space-between;font-size:13px;color:#6B7280"><span>ضريبة القيمة المضافة ٥٪</span><span style="color:#111827;font-weight:700">{{ vat }}</span></div>
+<div style="height:1px;background:#F1F2F5"></div>
+<div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-size:14px;font-weight:700">الإجمالي</span><span style="font-size:19px;font-weight:700;color:#E31B23">{{ total }}</span></div>
+</div>
+<div>
+<div style="font-size:16px;font-weight:700;margin-bottom:11px">طريقة الدفع</div>
+<div style="display:flex;flex-direction:column;gap:9px">
+<sc-for list="{{ pays }}" as="m" hint-placeholder-count="3">
+<div onClick="{{ m.pick }}" style="background:{{ m.bg }};border:1.5px solid {{ m.bd }};border-radius:16px;padding:14px;display:flex;align-items:center;gap:12px;cursor:pointer">
+<div style="width:20px;height:20px;border-radius:99px;border:2px solid {{ m.dotBd }};display:flex;align-items:center;justify-content:center;flex:none">
+<sc-if value="{{ m.on }}" hint-placeholder-val="{{ false }}">
+<span style="width:10px;height:10px;border-radius:99px;background:#E31B23;animation:dfPop .16s ease both"></span>
+</sc-if>
+</div>
+<div style="flex:1;min-width:0">
+<div style="font-size:13.5px;font-weight:600">{{ m.name }}</div>
+<div style="font-size:11.5px;color:#6B7280;margin-top:2px">{{ m.note }}</div>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+<div style="background:#FFF7ED;border:1px solid #FED7AA;border-radius:14px;padding:13px;font-size:12px;line-height:1.75;color:#92400E">يبدأ التنفيذ خلال ٢٤ ساعة من تأكيد الدفع، ويمكنك متابعة التقدّم من «الطلبات».</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isSuccess }}" hint-placeholder-val="{{ false }}">
+<div style="padding:50px 24px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:13px;animation:dfIn .3s ease both">
+<div style="width:86px;height:86px;border-radius:99px;background:#DCFCE7;display:flex;align-items:center;justify-content:center;font-size:36px;color:#15803D;animation:dfPop .32s ease both">✓</div>
+<div style="font-size:21px;font-weight:700;margin-top:4px">تم تأكيد طلبك</div>
+<div style="font-size:13.5px;color:#6B7280;line-height:1.75;max-width:272px">استلمنا طلبك بنجاح. سيتواصل معك فريق دبي فانز خلال ٢٤ ساعة لبدء التنفيذ.</div>
+<div style="margin-top:8px;background:#fff;border:1px solid #EFF1F4;border-radius:16px;padding:16px;width:100%;display:flex;flex-direction:column;gap:11px">
+<div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:#6B7280">رقم الطلب</span><span style="font-weight:700">{{ newOrderId }}</span></div>
+<div style="display:flex;justify-content:space-between;font-size:13px;gap:12px"><span style="color:#6B7280;flex:none">الخدمة</span><span style="font-weight:600;text-align:left">{{ curOrder.name }}</span></div>
+<div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:#6B7280">المبلغ</span><span style="font-weight:700;color:#E31B23;white-space:nowrap">{{ curOrder.amount }}</span></div>
+</div>
+<div onClick="{{ goOrders }}" style="margin-top:6px;width:100%;padding:16px;border-radius:15px;background:#E31B23;color:#fff;font-size:14.5px;font-weight:700;cursor:pointer;box-sizing:border-box" style-hover="background:#C8151C">متابعة الطلب</div>
+<div onClick="{{ goHome }}" style="font-size:13px;color:#6B7280;font-weight:600;cursor:pointer;padding:8px">العودة للرئيسية</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isOrders }}" hint-placeholder-val="{{ false }}">
+<div style="padding:14px 16px 28px;display:flex;flex-direction:column;gap:14px;animation:dfIn .28s ease both">
+<div style="display:flex;gap:8px">
+<sc-for list="{{ orderTabs }}" as="f" hint-placeholder-count="4">
+<div onClick="{{ f.pick }}" style="flex:1;text-align:center;padding:9px 4px;border-radius:12px;font-size:12px;font-weight:600;cursor:pointer;background:{{ f.bg }};color:{{ f.fg }};border:1px solid {{ f.bd }}">{{ f.label }}</div>
+</sc-for>
+</div>
+<div style="display:flex;flex-direction:column;gap:10px">
+<sc-for list="{{ ordersView }}" as="o" hint-placeholder-count="4">
+<div onClick="{{ o.open }}" style="background:#fff;border:1px solid #EFF1F4;border-radius:17px;padding:15px;display:flex;flex-direction:column;gap:11px;cursor:pointer" style-hover="border-color:#FCA5A5">
+<div style="display:flex;align-items:center;gap:10px">
+<div style="width:38px;height:38px;border-radius:12px;background:#FFF1F2;display:flex;align-items:center;justify-content:center;font-size:16px;color:#E31B23;flex:none">{{ o.glyph }}</div>
+<div style="flex:1;min-width:0">
+<div style="font-size:13.5px;font-weight:700">{{ o.name }}</div>
+<div style="font-size:11px;color:#9CA3AF;margin-top:2px">{{ o.pkg }}</div>
+</div>
+<div style="padding:5px 10px;border-radius:99px;font-size:11px;font-weight:600;flex:none;background:{{ o.badgeBg }};color:{{ o.badgeFg }}">{{ o.status }}</div>
+</div>
+<div style="height:5px;border-radius:99px;background:#F1F2F5;overflow:hidden">
+<div style="height:100%;border-radius:99px;background:{{ o.barColor }};width:{{ o.pct }}%"></div>
+</div>
+<div style="display:flex;justify-content:space-between;align-items:baseline">
+<div style="font-size:11px;color:#9CA3AF;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">#{{ o.id }} · {{ o.date }}</div>
+<div style="font-size:13.5px;font-weight:700;flex:none;white-space:nowrap">{{ o.amount }}</div>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isOrderDetail }}" hint-placeholder-val="{{ false }}">
+<div style="padding:16px 16px 28px;display:flex;flex-direction:column;gap:18px;animation:dfIn .28s ease both">
+<div style="background:#111827;border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:12px">
+<div style="display:flex;align-items:center;justify-content:space-between">
+<div style="font-size:12px;color:#9CA3AF">#{{ curOrder.id }}</div>
+<div style="padding:5px 10px;border-radius:99px;font-size:11px;font-weight:600;background:rgba(212,175,55,.18);color:#D4AF37">{{ curOrder.status }}</div>
+</div>
+<div style="font-size:18px;font-weight:700;color:#fff">{{ curOrder.name }}</div>
+<div style="height:6px;border-radius:99px;background:rgba(255,255,255,.14);overflow:hidden">
+<div style="height:100%;border-radius:99px;background:#D4AF37;width:{{ curOrder.pct }}%"></div>
+</div>
+<div style="font-size:11.5px;color:#9CA3AF">{{ curOrder.note }}</div>
+</div>
+<div>
+<div style="font-size:16px;font-weight:700;margin-bottom:12px">مراحل التنفيذ</div>
+<div style="display:flex;flex-direction:column">
+<sc-for list="{{ timeline }}" as="t" hint-placeholder-count="4">
+<div style="display:flex;gap:12px">
+<div style="display:flex;flex-direction:column;align-items:center;flex:none;width:22px">
+<div style="width:22px;height:22px;border-radius:99px;background:{{ t.dotBg }};border:2px solid {{ t.dotBd }};display:flex;align-items:center;justify-content:center;font-size:11px;color:{{ t.tickColor }}">{{ t.tick }}</div>
+<div style="flex:1;width:2px;background:{{ t.lineColor }};min-height:26px"></div>
+</div>
+<div style="flex:1;padding-bottom:18px">
+<div style="font-size:13.5px;font-weight:600;color:{{ t.titleColor }}">{{ t.title }}</div>
+<div style="font-size:11.5px;color:#9CA3AF;margin-top:3px">{{ t.when }}</div>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+<div style="background:#fff;border:1px solid #EFF1F4;border-radius:17px;padding:16px;display:flex;flex-direction:column;gap:11px">
+<div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:#6B7280">الباقة</span><span style="font-weight:600">{{ curOrder.pkg }}</span></div>
+<div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:#6B7280">طريقة الدفع</span><span style="font-weight:600">{{ curOrder.pay }}</span></div>
+<div style="height:1px;background:#F1F2F5"></div>
+<div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-size:14px;font-weight:700">المبلغ</span><span style="font-size:18px;font-weight:700;color:#E31B23">{{ curOrder.amount }}</span></div>
+</div>
+<div style="display:flex;align-items:center;gap:10px;background:#fff;border:1px solid #EFF1F4;border-radius:15px;padding:14px;cursor:pointer" style-hover="border-color:#D1D5DB">
+<img src="mobile/assets/icons/whatsapp.png" alt="" style="width:26px;height:26px;object-fit:contain">
+<div style="flex:1;font-size:13.5px;font-weight:600">تواصل مع مدير الحساب</div>
+<span style="color:#9CA3AF;font-size:15px">›</span>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isCampaigns }}" hint-placeholder-val="{{ false }}">
+<div style="padding:14px 16px 28px;display:flex;flex-direction:column;gap:16px;animation:dfIn .28s ease both">
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+<sc-for list="{{ stats }}" as="s">
+<div style="background:#fff;border:1px solid #EFF1F4;border-radius:16px;padding:13px;display:flex;flex-direction:column;gap:8px">
+<div style="display:flex;align-items:center;gap:8px">
+<div style="width:26px;height:26px;background-size:contain;background-repeat:no-repeat;background-position:center;background-image:{{ s.iconCss }}"></div>
+<div style="font-size:12px;color:#6B7280;font-weight:500">{{ s.label }}</div>
+</div>
+<div style="display:flex;align-items:baseline;gap:7px">
+<div style="font-size:20px;font-weight:700;letter-spacing:-.3px">{{ s.value }}</div>
+<div style="font-size:11px;font-weight:700;color:#16A34A">{{ s.delta }}</div>
+</div>
+</div>
+</sc-for>
+</div>
+<div onClick="{{ goCampaign }}" style="padding:15px;border-radius:15px;background:#E31B23;color:#fff;font-size:14.5px;font-weight:700;text-align:center;cursor:pointer" style-hover="background:#C8151C">أطلق حملة جديدة</div>
+<div style="font-size:16px;font-weight:700">حملاتك النشطة</div>
+<sc-for list="{{ campaigns }}" as="c" hint-placeholder-count="2">
+<div style="background:#fff;border:1px solid #EFF1F4;border-radius:17px;padding:15px;display:flex;flex-direction:column;gap:11px">
+<div style="display:flex;align-items:center;justify-content:space-between">
+<div style="font-size:14px;font-weight:700">{{ c.name }}</div>
+<div style="padding:5px 10px;border-radius:99px;font-size:11px;font-weight:600;background:#FEF3C7;color:#B45309">{{ c.status }}</div>
+</div>
+<div style="font-size:11.5px;color:#9CA3AF">{{ c.meta }}</div>
+<div style="display:flex;gap:9px">
+<sc-for list="{{ c.kpis }}" as="k" hint-placeholder-count="3">
+<div style="flex:1;background:#F7F8FA;border-radius:12px;padding:10px 8px;text-align:center">
+<div style="font-size:13.5px;font-weight:700">{{ k.v }}</div>
+<div style="font-size:10.5px;color:#6B7280;margin-top:3px">{{ k.k }}</div>
+</div>
+</sc-for>
+</div>
+</div>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{ isNotifications }}" hint-placeholder-val="{{ false }}">
+<div style="padding:14px 16px 28px;display:flex;flex-direction:column;gap:11px;animation:dfIn .28s ease both">
+<sc-for list="{{ notifications }}" as="n" hint-placeholder-count="5">
+<div style="background:#fff;border:1px solid #EFF1F4;border-radius:17px;padding:15px;display:flex;gap:12px;align-items:flex-start">
+<div style="width:40px;height:40px;border-radius:13px;background:{{ n.iconBg }};display:flex;align-items:center;justify-content:center;font-size:16px;color:{{ n.iconFg }};flex:none">{{ n.glyph }}</div>
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:5px">
+<div style="font-size:14.5px;font-weight:700">{{ n.title }}</div>
+<div style="font-size:12.5px;color:#6B7280;line-height:1.6">{{ n.body }}</div>
+<div style="display:flex;align-items:center;justify-content:space-between;margin-top:4px">
+<div style="font-size:11px;color:#9CA3AF">{{ n.date }}</div>
+<div style="font-size:12px;font-weight:700;color:#E31B23">#{{ n.id }}</div>
+</div>
+</div>
+</div>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{ isAccount }}" hint-placeholder-val="{{ false }}">
+<div style="padding:14px 16px 28px;display:flex;flex-direction:column;gap:18px;animation:dfIn .28s ease both">
+<div style="background:#fff;border:1px solid #EFF1F4;border-radius:18px;padding:15px;display:flex;align-items:center;gap:13px">
+<div style="width:56px;height:56px;border-radius:16px;background:#E31B23;color:#fff;font-size:24px;font-weight:700;display:flex;align-items:center;justify-content:center;flex:none">M</div>
+<div style="flex:1;min-width:0">
+<div style="font-size:16px;font-weight:700">mahmoudterk</div>
+<div style="font-size:12.5px;color:#6B7280;margin-top:3px;overflow:hidden;text-overflow:ellipsis">mahmoudterk2@gmail.com</div>
+</div>
+<div style="padding:9px 16px;border-radius:11px;border:1px solid #E31B23;color:#E31B23;font-size:12.5px;font-weight:700;cursor:pointer;flex:none" style-hover="background:#FFF1F2">تعديل</div>
+</div>
+<div style="padding:16px;border-radius:16px;background:#111827;color:#fff;font-size:15px;font-weight:700;text-align:center;cursor:pointer" style-hover="background:#0B1220">مستشار Dubai Fans</div>
+<div>
+<div style="font-size:16px;font-weight:700;margin-bottom:10px">البيانات الشخصية</div>
+<div style="background:#fff;border:1px solid #EFF1F4;border-radius:16px;overflow:hidden">
+<sc-for list="{{ personal }}" as="r" hint-placeholder-count="3">
+<div style="display:flex;align-items:center;justify-content:space-between;padding:14px 15px;border-bottom:1px solid #F4F5F7">
+<div style="font-size:13px;color:#6B7280">{{ r.k }}</div>
+<div style="font-size:13.5px;font-weight:700;color:{{ r.color }}">{{ r.v }}</div>
+</div>
+</sc-for>
+</div>
+</div>
+<div>
+<div style="font-size:16px;font-weight:700;margin-bottom:10px">بيانات النشاط التجاري</div>
+<div style="background:#fff;border:1px solid #EFF1F4;border-radius:16px;overflow:hidden">
+<sc-for list="{{ business }}" as="r" hint-placeholder-count="5">
+<div style="display:flex;align-items:center;justify-content:space-between;padding:14px 15px;border-bottom:1px solid #F4F5F7">
+<div style="font-size:13px;color:#6B7280">{{ r.k }}</div>
+<div style="font-size:13.5px;font-weight:700;color:{{ r.color }}">{{ r.v }}</div>
+</div>
+</sc-for>
+</div>
+</div>
+<div>
+<div style="font-size:16px;font-weight:700;margin-bottom:10px">سجل المدفوعات</div>
+<div style="background:#fff;border:1px solid #EFF1F4;border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:13px">
+<div style="display:flex;align-items:center;gap:12px">
+<div style="width:40px;height:40px;border-radius:99px;background:#FFF1F2;color:#E31B23;font-size:15px;font-weight:700;display:flex;align-items:center;justify-content:center;flex:none">4</div>
+<div style="flex:1">
+<div style="font-size:15px;font-weight:700">المدفوعات</div>
+<div style="font-size:12px;color:#6B7280;margin-top:2px">آخر عملية دفع</div>
+</div>
+</div>
+<div style="height:1px;background:#F1F2F5"></div>
+<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px">
+<div style="width:40px;height:40px;border-radius:13px;background:#FFF1F2;color:#E31B23;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;flex:none">د</div>
+<div style="flex:1;text-align:center">
+<div style="font-size:14.5px;font-weight:700">Followers</div>
+<div style="font-size:12px;color:#6B7280;margin-top:3px">١٬٠٠٠ متابع</div>
+</div>
+<div style="text-align:left;flex:none">
+<div style="font-size:15px;font-weight:700">٣٠ د.إ</div>
+<div style="margin-top:6px;padding:4px 9px;border-radius:8px;background:#FEF3C7;color:#B45309;font-size:11px;font-weight:600">بانتظار إتمام الدفع</div>
+</div>
+</div>
+<div style="display:flex;align-items:center;justify-content:space-between;font-size:11.5px;color:#9CA3AF">
+<span>طلب #DF-2026-964363</span><span>١٣ سبتمبر ٢٠٢٦</span>
+</div>
+</div>
+</div>
+<div>
+<div style="font-size:16px;font-weight:700;margin-bottom:10px">هل تحتاج إلى مساعدة؟</div>
+<div style="background:#111827;border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:10px">
+<sc-for list="{{ support }}" as="c" hint-placeholder-count="3">
+<div style="background:#fff;border-radius:13px;padding:14px;text-align:center;font-size:14px;font-weight:700;color:{{ c.color }};cursor:pointer" style-hover="background:#F3F4F6">{{ c.label }}</div>
+</sc-for>
+</div>
+</div>
+<div onClick="{{ doLogout }}" style="padding:16px;border-radius:15px;border:1px solid #FCA5A5;color:#E31B23;font-size:14.5px;font-weight:700;text-align:center;cursor:pointer" style-hover="background:#FFF1F2">تسجيل الخروج</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isCampaignFlow }}" hint-placeholder-val="{{ false }}">
+<div style="padding:14px 16px 24px;display:flex;flex-direction:column;gap:18px;animation:dfIn .28s ease both">
+<div style="display:flex;align-items:center;gap:7px">
+<sc-for list="{{ wizSteps }}" as="w">
+<div style="flex:1;display:flex;flex-direction:column;gap:7px">
+<div style="height:5px;border-radius:99px;background:{{ w.bar }}"></div>
+<div style="font-size:10.5px;font-weight:600;color:{{ w.fg }}">{{ w.label }}</div>
+</div>
+</sc-for>
+</div>
+
+<sc-if value="{{ wizStep1 }}" hint-placeholder-val="{{ true }}">
+<div style="display:flex;flex-direction:column;gap:14px">
+<div>
+<div style="font-size:19px;font-weight:700">ارفع محتواك</div>
+<div style="font-size:12.5px;color:#6B7280;margin-top:4px">صورة أو فيديو وأدخل بيانات مشروعك</div>
+</div>
+<div onClick="{{ toggleMedia }}" style="border:1.5px dashed {{ mediaBd }};background:{{ mediaBg }};border-radius:18px;padding:26px 16px;display:flex;flex-direction:column;align-items:center;gap:9px;cursor:pointer">
+<div style="width:46px;height:46px;border-radius:15px;background:#FFF1F2;color:#E31B23;font-size:19px;display:flex;align-items:center;justify-content:center">↑</div>
+<div style="font-size:14px;font-weight:700">{{ mediaTitle }}</div>
+<div style="font-size:11.5px;color:#6B7280">{{ mediaNote }}</div>
+</div>
+<div>
+<div style="font-size:13px;font-weight:600;margin-bottom:8px">اسم المشروع</div>
+<input value="{{ projName }}" onInput="{{ onProjName }}" placeholder="مثال: مقهى دبي فانز" style="width:100%;box-sizing:border-box;border:1px solid #EDEFF2;background:#fff;border-radius:13px;padding:14px;font-family:inherit;font-size:13.5px;outline:none;direction:rtl;color:#111827">
+</div>
+<div>
+<div style="font-size:13px;font-weight:600;margin-bottom:8px">نوع النشاط</div>
+<div style="display:flex;gap:8px;flex-wrap:wrap">
+<sc-for list="{{ bizTypes }}" as="b">
+<div onClick="{{ b.pick }}" style="padding:9px 14px;border-radius:99px;font-size:12.5px;font-weight:600;cursor:pointer;background:{{ b.bg }};color:{{ b.fg }};border:1px solid {{ b.bd }}">{{ b.label }}</div>
+</sc-for>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ wizStep2 }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-direction:column;gap:16px">
+<div>
+<div style="font-size:19px;font-weight:700">حدد هدفك</div>
+<div style="font-size:12.5px;color:#6B7280;margin-top:4px">اختر المنصة، المدة والميزانية ورقم الواتساب</div>
+</div>
+<div>
+<div style="font-size:13px;font-weight:600;margin-bottom:9px">المنصات</div>
+<div style="display:flex;gap:9px">
+<sc-for list="{{ platforms }}" as="p">
+<div onClick="{{ p.toggle }}" style="flex:1;border:1.5px solid {{ p.bd }};background:{{ p.bg }};border-radius:15px;padding:11px 6px;display:flex;flex-direction:column;align-items:center;gap:7px;cursor:pointer">
+<div style="width:26px;height:26px;background-size:contain;background-repeat:no-repeat;background-position:center;background-image:{{ p.iconCss }}"></div>
+<div style="font-size:10.5px;font-weight:600;color:{{ p.fg }}">{{ p.label }}</div>
+</div>
+</sc-for>
+</div>
+</div>
+<div>
+<div style="font-size:13px;font-weight:600;margin-bottom:9px">هدف الحملة</div>
+<div style="display:flex;gap:8px">
+<sc-for list="{{ goals }}" as="g">
+<div onClick="{{ g.pick }}" style="flex:1;text-align:center;padding:11px 6px;border-radius:13px;font-size:12px;font-weight:600;cursor:pointer;background:{{ g.bg }};color:{{ g.fg }};border:1px solid {{ g.bd }}">{{ g.label }}</div>
+</sc-for>
+</div>
+</div>
+<div style="background:#fff;border:1px solid #EFF1F4;border-radius:17px;padding:16px;display:flex;flex-direction:column;gap:14px">
+<div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+<div style="min-width:0">
+<div style="font-size:13.5px;font-weight:700">مدة الحملة</div>
+<div style="font-size:11.5px;color:#6B7280;margin-top:2px">إدارة يومية بـ ٨٠ درهم لليوم</div>
+</div>
+<div style="display:flex;align-items:center;gap:9px;flex:none">
+<div onClick="{{ daysDown }}" style="width:32px;height:32px;border-radius:10px;background:#F3F4F6;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700;cursor:pointer" style-hover="background:#E5E7EB">−</div>
+<div style="font-size:15px;font-weight:700;min-width:52px;text-align:center;white-space:nowrap">{{ daysLabel }}</div>
+<div onClick="{{ daysUp }}" style="width:32px;height:32px;border-radius:10px;background:#FFF1F2;color:#E31B23;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700;cursor:pointer" style-hover="background:#FEE2E2">+</div>
+</div>
+</div>
+<div style="height:1px;background:#F1F2F5"></div>
+<div>
+<div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:10px">
+<div style="font-size:13.5px;font-weight:700">ميزانية الإعلان اليومية</div>
+<div style="font-size:14px;font-weight:700;color:#E31B23;white-space:nowrap">{{ budgetLabel }}</div>
+</div>
+<input type="range" min="50" max="1000" step="25" value="{{ budget }}" onInput="{{ onBudget }}" style="width:100%;accent-color:#E31B23">
+</div>
+</div>
+<div>
+<div style="font-size:13px;font-weight:600;margin-bottom:8px">رقم الواتساب لاستلام الرسائل</div>
+<input value="{{ waNumber }}" onInput="{{ onWa }}" placeholder="+٩٧١٥٦٨٩٥٢٧٧٥" style="width:100%;box-sizing:border-box;border:1px solid #EDEFF2;background:#fff;border-radius:13px;padding:14px;font-family:inherit;font-size:13.5px;outline:none;direction:ltr;text-align:right;color:#111827">
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ wizStep3 }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-direction:column;gap:16px">
+<div>
+<div style="font-size:19px;font-weight:700">تابع النتائج</div>
+<div style="font-size:12.5px;color:#6B7280;margin-top:4px">راجع حملتك قبل الإرسال وتابع حالتها مباشرة</div>
+</div>
+<div style="background:#fff;border:1px solid #EFF1F4;border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:12px">
+<sc-for list="{{ reviewRows }}" as="r">
+<div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px">
+<div style="font-size:12.5px;color:#6B7280;flex:none">{{ r.k }}</div>
+<div style="font-size:13.5px;font-weight:700;text-align:left">{{ r.v }}</div>
+</div>
+</sc-for>
+<div style="height:1px;background:#F1F2F5"></div>
+<div style="display:flex;align-items:baseline;justify-content:space-between">
+<div style="font-size:14px;font-weight:700">إجمالي الحملة</div>
+<div style="font-size:20px;font-weight:700;color:#E31B23;white-space:nowrap">{{ campaignTotal }}</div>
+</div>
+</div>
+<div style="background:#111827;border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:12px">
+<div style="font-size:13.5px;font-weight:700;color:#fff">التوقعات التقديرية</div>
+<div style="display:flex;gap:9px">
+<sc-for list="{{ forecast }}" as="f">
+<div style="flex:1;background:rgba(255,255,255,.07);border-radius:13px;padding:12px 8px;text-align:center">
+<div style="font-size:15px;font-weight:700;color:#D4AF37">{{ f.v }}</div>
+<div style="font-size:10.5px;color:#9CA3AF;margin-top:4px">{{ f.k }}</div>
+</div>
+</sc-for>
+</div>
+<div style="font-size:11px;color:#9CA3AF;line-height:1.6">أرقام تقديرية مبنية على متوسط أداء الحملات المشابهة في الإمارات.</div>
+</div>
+</div>
+</sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ isAssistant }}" hint-placeholder-val="{{ false }}">
+<div style="padding:14px 16px 20px;display:flex;flex-direction:column;gap:12px;animation:dfIn .28s ease both">
+<sc-for list="{{ messages }}" as="m">
+<div style="display:flex;justify-content:{{ m.align }}">
+<div style="max-width:78%;background:{{ m.bg }};color:{{ m.fg }};border:1px solid {{ m.bd }};border-radius:16px;padding:13px 14px;font-size:13px;line-height:1.7;text-wrap:pretty">{{ m.text }}</div>
+</div>
+</sc-for>
+<div style="margin-top:6px;font-size:12px;color:#9CA3AF">أسئلة سريعة</div>
+<div style="display:flex;flex-wrap:wrap;gap:8px">
+<sc-for list="{{ suggestions }}" as="sg">
+<div onClick="{{ sg.ask }}" style="padding:9px 13px;border-radius:99px;background:#fff;border:1px solid #E5E7EB;font-size:12.5px;font-weight:600;cursor:pointer" style-hover="border-color:#E31B23;color:#E31B23">{{ sg.label }}</div>
+</sc-for>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isTool }}" hint-placeholder-val="{{ false }}">
+<div style="padding:14px 16px 24px;display:flex;flex-direction:column;gap:16px;animation:dfIn .28s ease both">
+<div style="background:#fff;border:1px solid #EFF1F4;border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:13px">
+<div style="display:flex;align-items:center;gap:12px">
+<div style="width:44px;height:44px;border-radius:14px;background:#FFF1F2;color:#E31B23;font-size:18px;display:flex;align-items:center;justify-content:center;flex:none">{{ toolGlyph }}</div>
+<div style="flex:1;min-width:0">
+<div style="font-size:15px;font-weight:700">{{ toolTitle }}</div>
+<div style="font-size:11.5px;color:#6B7280;margin-top:2px">{{ toolSub }}</div>
+</div>
+</div>
+<input value="{{ toolInput }}" onInput="{{ onToolInput }}" placeholder="{{ toolPlaceholder }}" style="width:100%;box-sizing:border-box;border:1px solid #EDEFF2;background:#F7F8FA;border-radius:13px;padding:14px;font-family:inherit;font-size:13.5px;outline:none;direction:ltr;text-align:right;color:#111827">
+<div onClick="{{ runTool }}" style="padding:15px;border-radius:14px;background:#111827;color:#fff;font-size:14px;font-weight:700;text-align:center;cursor:pointer" style-hover="background:#0B1220">ابدأ الفحص</div>
+</div>
+<sc-if value="{{ toolDone }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-direction:column;gap:12px;animation:dfIn .3s ease both">
+<div style="background:#fff;border:1px solid #EFF1F4;border-radius:18px;padding:18px;display:flex;align-items:center;gap:16px">
+<div style="width:78px;height:78px;border-radius:99px;background:conic-gradient(#E31B23 {{ toolScoreTurn }},#F1F2F5 0);display:flex;align-items:center;justify-content:center;flex:none">
+<div style="width:60px;height:60px;border-radius:99px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700">{{ toolScore }}</div>
+</div>
+<div style="flex:1;min-width:0">
+<div style="font-size:15px;font-weight:700">{{ toolVerdict }}</div>
+<div style="font-size:12px;color:#6B7280;margin-top:5px;line-height:1.65">{{ toolVerdictNote }}</div>
+</div>
+</div>
+<sc-for list="{{ toolRows }}" as="r">
+<div style="background:#fff;border:1px solid #EFF1F4;border-radius:15px;padding:14px;display:flex;align-items:center;gap:12px">
+<span style="width:24px;height:24px;border-radius:99px;background:{{ r.bg }};color:{{ r.fg }};font-size:12px;display:flex;align-items:center;justify-content:center;flex:none">{{ r.tick }}</span>
+<div style="flex:1;min-width:0">
+<div style="font-size:13.5px;font-weight:600">{{ r.k }}</div>
+<div style="font-size:11.5px;color:#6B7280;margin-top:2px">{{ r.v }}</div>
+</div>
+</div>
+</sc-for>
+<div onClick="{{ goServices }}" style="padding:15px;border-radius:14px;border:1px solid #E31B23;color:#E31B23;font-size:14px;font-weight:700;text-align:center;cursor:pointer" style-hover="background:#FFF1F2">اطلب خدمة تحسين من دبي فانز</div>
+</div>
+</sc-if>
+</div>
+</sc-if>
+
+</div>
+</sc-if>
+
+<sc-if value="{{ showWizardBar }}" hint-placeholder-val="{{ false }}">
+<div style="flex:none;background:#fff;border-top:1px solid #EFF1F4;padding:12px 16px 26px;display:flex;align-items:center;gap:12px">
+<div style="flex:none">
+<div style="font-size:10.5px;color:#6B7280">الإجمالي</div>
+<div style="font-size:18px;font-weight:700;white-space:nowrap">{{ campaignTotal }}</div>
+</div>
+<div onClick="{{ wizNext }}" style="flex:1;text-align:center;padding:15px;border-radius:15px;background:#E31B23;color:#fff;font-size:14.5px;font-weight:700;cursor:pointer" style-hover="background:#C8151C">{{ wizLabel }}</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ showDetailBar }}" hint-placeholder-val="{{ false }}">
+<div style="flex:none;background:#fff;border-top:1px solid #EFF1F4;padding:12px 16px 26px;display:flex;align-items:center;gap:12px">
+<div style="flex:none">
+<div style="font-size:10.5px;color:#6B7280">الإجمالي</div>
+<div style="font-size:18px;font-weight:700">{{ total }}</div>
+</div>
+<div onClick="{{ primaryAction }}" style="flex:1;text-align:center;padding:15px;border-radius:15px;background:#E31B23;color:#fff;font-size:14.5px;font-weight:700;cursor:pointer" style-hover="background:#C8151C">{{ primaryLabel }}</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ showTabs }}" hint-placeholder-val="{{ false }}">
+<div style="flex:none;background:#fff;border-top:1px solid #EFF1F4;padding:9px 4px 24px;display:flex;box-shadow:0 -4px 18px rgba(17,24,39,.05)">
+<sc-for list="{{ tabs }}" as="t" hint-placeholder-count="5">
+<div onClick="{{ t.go }}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;padding:4px 0">
+<div style="font-size:16px;color:{{ t.fg }}">{{ t.glyph }}</div>
+<div style="font-size:10.5px;font-weight:600;color:{{ t.fg }}">{{ t.label }}</div>
+</div>
+</sc-for>
+</div>
+</sc-if>
+
+</div>
+</x-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:460,&quot;height&quot;:960},&quot;startScreen&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;splash&quot;,&quot;login&quot;,&quot;home&quot;,&quot;services&quot;,&quot;campaign&quot;,&quot;assistant&quot;,&quot;tool&quot;,&quot;orders&quot;,&quot;campaigns&quot;,&quot;account&quot;,&quot;notifications&quot;],&quot;default&quot;:&quot;splash&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+const RED = '#E31B23', GOLD = '#D4AF37';
+const AR = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+const num = (n) => String(n).replace(/,/g, '٬').replace(/[0-9]/g, (d) => AR[+d]);
+const aed = (n) => num(n.toLocaleString('en-US')) + ' د.إ';
+
+const SERVICES = [
+  { slug:'advertising', glyph:'◉', name:'إدارة الحملات الإعلانية', short:'إدارة الحملات ا…', en:'Professional advertising campaign management.', tag:'حملات مدفوعة بإدارة يومية', price:'من ٨٠ د.إ', from:80,
+    desc:'فريق مختص يدير حملاتك الإعلانية على المنصات يوميًا: بناء الجمهور، كتابة النص الإعلاني، ضبط الميزانية، وتقرير أداء أسبوعي. أطلق إعلانك بنفسك ابتداءً من ٨٠ درهم لليوم.',
+    perks:[{k:'بدء التنفيذ',v:'٢٤ ساعة'},{k:'تقارير',v:'أسبوعية'},{k:'منصات',v:'٤'}],
+    packages:[{name:'إدارة ٧ أيام', note:'تجربة قصيرة لقياس الأداء', p:560},{name:'إدارة ١٤ يوم', note:'الأنسب للعروض الموسمية', p:1120},{name:'إدارة ٣٠ يوم', note:'الأكثر طلبًا · تحسين مستمر', p:2400}] },
+  { slug:'followers', glyph:'◍', name:'زيادة المتابعين', short:'زيادة المتابعين', en:'Social media follower growth packages.', tag:'نمو حقيقي لحساباتك', price:'من ٣٠ د.إ', from:30,
+    desc:'باقات زيادة متابعين تُنفَّذ بشكل تدريجي وآمن للحفاظ على تفاعل الحساب ونسبة الوصول.',
+    perks:[{k:'التسليم',v:'تدريجي'},{k:'ضمان',v:'٣٠ يوم'},{k:'بدء',v:'٦ ساعات'}],
+    packages:[{name:'١٬٠٠٠ متابع', note:'تسليم خلال ٣ أيام', p:30},{name:'٥٬٠٠٠ متابع', note:'تسليم خلال ٧ أيام', p:150},{name:'١٠٬٠٠٠ متابع', note:'الأكثر طلبًا', p:249},{name:'٢٥٬٠٠٠ متابع', note:'تسليم خلال ٢١ يوم', p:399}] },
+  { slug:'views', glyph:'◎', name:'المشاهدات والإعجابات', short:'المشاهدات والإعجابات', en:'Views and likes growth packages.', tag:'دفعة سريعة لمحتواك', price:'من ٢٩ د.إ', from:29,
+    desc:'باقات مشاهدات وإعجابات للريلز والفيديوهات القصيرة، تُوزَّع على مدار الساعات الأولى لزيادة فرص الانتشار.',
+    perks:[{k:'بدء',v:'فوري'},{k:'توزيع',v:'٢٤ ساعة'},{k:'دعم',v:'مباشر'}],
+    packages:[{name:'١٠٬٠٠٠ مشاهدة + ٥٠٠ إعجاب', note:'للمنشور الواحد', p:29},{name:'٥٠٬٠٠٠ مشاهدة + ٢٬٠٠٠ إعجاب', note:'الأكثر طلبًا', p:99}] },
+  { slug:'website', glyph:'▣', name:'إنشاء موقع إلكتروني', short:'إنشاء موقع إلكتروني', en:'Professional business website from a selected template.', tag:'موقع احترافي من قالب جاهز', price:'من ٥٩٩ د.إ', from:599,
+    desc:'موقع تعريفي كامل من قوالب دبي فانز: تصميم متجاوب، نطاق واستضافة للسنة الأولى، وربط نماذج التواصل وواتساب.',
+    perks:[{k:'التسليم',v:'٧ أيام'},{k:'قوالب',v:'١٢'},{k:'استضافة',v:'سنة'}],
+    packages:[{name:'موقع أعمال', note:'حتى ٦ صفحات · نطاق مجاني', p:599}] },
+  { slug:'ecommerce', glyph:'▤', name:'إنشاء متجر إلكتروني', short:'إنشاء متجر إلكتروني', en:'Professional online store from a selected template.', tag:'متجر متكامل مع بوابة دفع', price:'من ٧٩٩ د.إ', from:799,
+    desc:'متجر إلكتروني جاهز للبيع: إدارة منتجات، بوابة دفع محلية، شحن، وربط بحسابات التواصل.',
+    perks:[{k:'التسليم',v:'١٠ أيام'},{k:'منتجات',v:'غير محدود'},{k:'دفع',v:'محلي'}],
+    packages:[{name:'متجر إلكتروني', note:'إعداد كامل + تدريب', p:799}] },
+  { slug:'seo', glyph:'◇', name:'SEO & Google', short:'SEO & Google', en:'SEO and Google visibility improvement service.', tag:'ظهور أعلى في نتائج البحث', price:'من ٢٬٩٩٩ د.إ', from:2999,
+    desc:'تحسين تقني ومحتوى وبناء روابط لرفع ترتيب موقعك في نتائج البحث، مع تقرير شهري بالكلمات المفتاحية.',
+    perks:[{k:'المدة',v:'٣ أشهر'},{k:'كلمات',v:'٢٠'},{k:'تقارير',v:'شهرية'}],
+    packages:[{name:'باقة الربع السنوي', note:'تدقيق كامل + تنفيذ', p:2999}] },
+  { slug:'social', glyph:'◈', name:'إدارة وسائل التواصل', short:'إدارة وسائل التواصل', en:'Professional social media management.', tag:'محتوى ونشر وتفاعل', price:'عرض سعر', from:0,
+    desc:'إدارة كاملة لحساباتك: خطة محتوى شهرية، تصميم، نشر، والرد على الرسائل والتعليقات.',
+    perks:[{k:'منشورات',v:'٢٠ شهريًا'},{k:'منصات',v:'٣'},{k:'ردود',v:'يومية'}],
+    packages:[{name:'طلب عرض سعر', note:'يتواصل معك الفريق خلال يوم عمل', p:0}] },
+  { slug:'photo', glyph:'▢', name:'التصوير وصناعة المحتوى', short:'التصوير وصناعة ال…', en:'Professional photography and short-form video content.', tag:'ريلز وصور احترافية', price:'من ٢٬٩٩٩ د.إ', from:2999,
+    desc:'يوم تصوير كامل في موقعك مع فريق إنتاج: سيناريو، تصوير، مونتاج، ونسخ عمودية جاهزة للنشر.',
+    perks:[{k:'التسليم',v:'٥ أيام'},{k:'ريلز',v:'١٠'},{k:'تعديلات',v:'جولتان'}],
+    packages:[{name:'١٠ ريلز', note:'يوم تصوير واحد', p:2999}] },
+  { slug:'custom', glyph:'✦', name:'خدمة مخصصة', short:'خدمة مخصصة', en:'Request a custom service and receive a quotation.', tag:'اطلب ما يناسب مشروعك', price:'عرض سعر', from:0,
+    desc:'صف احتياجك وسنرسل لك عرض سعر مفصّل خلال يوم عمل واحد.',
+    perks:[{k:'الرد',v:'٢٤ ساعة'},{k:'استشارة',v:'مجانية'},{k:'عقد',v:'مرن'}],
+    packages:[{name:'طلب عرض سعر', note:'بدون التزام', p:0}] },
+];
+
+class Component extends DCLogic {
+  state = {
+    screen: 'splash', svc: 0, pkg: 0, pay: 'card', query: '', email: '', pass: '',
+    oFilter: 'الكل', cat: 'الكل', curId: 'DF-2026-408377',
+    wiz: 1, media: false, projName: '', bizType: 'مقهى / مطعم', goal: 'رسائل واتساب',
+    picked: ['instagram', 'tiktok'], days: 14, budget: 250, waNumber: '+٩٧١٥٦٨٩٥٢٧٧٥',
+    tool: 'instagram', toolInput: '', toolDone: false,
+    messages: [{ who:'bot', text:'أهلاً بك في مساعد Dubai Fans. اسألني عن خدماتنا أو أسعارنا أو كيف تبدأ حملتك الأولى.' }],
+    orders: [
+      { id:'DF-2026-408377', slug:'advertising', name:'إدارة الحملات الإعلانية', pkg:'إدارة ٣٠ يوم', date:'١٥ سبتمبر ٢٠٢٦', amount:2520, status:'قيد المراجعة', pct:35, note:'الطلب قيد المراجعة من فريق الحملات', state:'review', pay:'بطاقة ···٤٢٩١' },
+      { id:'DF-2026-941828', slug:'photo', name:'التصوير وصناعة المحتوى', pkg:'١٠ ريلز', date:'١٤ سبتمبر ٢٠٢٦', amount:3148, status:'مكتمل', pct:100, note:'تم تسليم جميع المقاطع', state:'done', pay:'Apple Pay' },
+      { id:'DF-2026-964363', slug:'followers', name:'زيادة المتابعين', pkg:'١٬٠٠٠ متابع', date:'١٣ سبتمبر ٢٠٢٦', amount:30, status:'بانتظار إتمام الدفع', pct:10, note:'أكمل الدفع لبدء التنفيذ', state:'pending', pay:'تحويل بنكي' },
+      { id:'DF-2026-201650', slug:'website', name:'إنشاء موقع إلكتروني', pkg:'موقع أعمال', date:'١٤ سبتمبر ٢٠٢٦', amount:629, status:'ملغي', pct:0, note:'تم إلغاء الطلب', state:'cancel', pay:'—' },
+    ],
+  };
+
+  componentDidMount() {
+    const start = this.props.startScreen;
+    if (start && start !== 'splash') { this.setState({ screen: start }); return; }
+    this.t = setTimeout(() => { if (this.state.screen === 'splash') this.setState({ screen: 'login' }); }, 2400);
+  }
+  componentWillUnmount() { clearTimeout(this.t); }
+
+  go = (screen) => this.setState({ screen });
+
+  renderVals() {
+    const s = this.state;
+    const svc = SERVICES[s.svc];
+    const pkg = svc.packages[Math.min(s.pkg, svc.packages.length - 1)];
+    const quote = pkg.p === 0;
+    const totalN = Math.round(pkg.p * 1.05);
+
+    const titles = {
+      services: ['الخدمات', 'كل خدمات التسويق التي يحتاجها مشروعك في مكان واحد'],
+      detail: [svc.name, svc.tag],
+      checkout: ['إتمام الطلب', 'خطوة واحدة متبقية'],
+      success: ['تم الطلب', ''],
+      orders: ['الطلبات', 'تابع طلباتك الحالية'],
+      orderDetail: ['تفاصيل الطلب', '#' + s.curId],
+      campaigns: ['الحملات', 'تابع حملاتك ونتائجها'],
+      account: ['حسابي', 'إدارة بياناتك وبيانات نشاطك التجاري'],
+      notifications: ['الإشعارات', 'آخر تحديثات طلباتك'],
+      home: ['أهلاً mahmoudterk', 'جاهز نطوّر مشروعك اليوم؟'],
+      campaign: ['أطلق حملتك', 'ثلاث خطوات فقط · ابتداءً من ٨٠ درهم لليوم'],
+      assistant: ['مساعد Dubai Fans', 'اسأل عن خدماتنا وحلولنا'],
+      tool: [s.tool === 'instagram' ? 'تحليل Instagram' : 'تحليل الموقع', 'أداة مجانية من دبي فانز'],
+    };
+    const t = titles[s.screen] || titles.home;
+
+    const open = (i) => () => this.setState({ svc: i, pkg: 0, screen: 'detail' });
+    const withOpen = (x) => ({ ...x, open: open(SERVICES.indexOf(x)) });
+
+    const META = {
+      advertising:['إعلانات','لليوم'], followers:['نمو','للباقة'], views:['نمو','للباقة'],
+      website:['تطوير','شامل'], ecommerce:['تطوير','شامل'], seo:['تسويق','للربع'],
+      social:['تسويق','حسب النطاق'], photo:['إنتاج','١٠ ريلز'], custom:['تسويق','حسب الطلب'],
+    };
+    const q = s.query.trim();
+    const listServices = SERVICES
+      .filter((x) => (s.cat === 'الكل' || META[x.slug][0] === s.cat) && (!q || x.name.includes(q) || x.en.toLowerCase().includes(q.toLowerCase())))
+      .map((x) => ({ ...withOpen(x), unit: META[x.slug][1] }));
+    const cats = ['الكل','إعلانات','نمو','تسويق','تطوير','إنتاج'].map((c) => {
+      const on = s.cat === c;
+      return { label: c, bg: on ? RED : '#fff', fg: on ? '#fff' : '#374151', bd: on ? RED : '#E5E7EB', pick: () => this.setState({ cat: c }) };
+    });
+
+    const packages = svc.packages.map((p, i) => {
+      const on = i === Math.min(s.pkg, svc.packages.length - 1);
+      return { name: p.name, note: p.note, price: p.p === 0 ? 'حسب الطلب' : aed(p.p), on,
+        bg: on ? '#FFF5F5' : '#fff', bd: on ? RED : '#EFF1F4', dotBd: on ? RED : '#D1D5DB',
+        pick: () => this.setState({ pkg: i }) };
+    });
+
+    const pays = [
+      { key:'card', name:'بطاقة ائتمانية', note:'فيزا · ماستركارد · ···٤٢٩١' },
+      { key:'apple', name:'Apple Pay', note:'دفع سريع ببصمة الوجه' },
+      { key:'bank', name:'تحويل بنكي', note:'يستغرق التأكيد حتى ٤٨ ساعة' },
+    ].map((m) => {
+      const on = s.pay === m.key;
+      return { ...m, on, bg: on ? '#FFF5F5' : '#fff', bd: on ? RED : '#EFF1F4', dotBd: on ? RED : '#D1D5DB', pick: () => this.setState({ pay: m.key }) };
+    });
+
+    const badge = { review:['#FEF3C7','#B45309'], active:['#FEF3C7','#B45309'], done:['#DCFCE7','#15803D'], pending:['#FEE2E2','#B91C1C'], cancel:['#F3F4F6','#6B7280'] };
+    const filt = { 'الكل': null, 'قيد التنفيذ': ['review','active'], 'مكتملة': ['done'], 'ملغية': ['cancel'] };
+    const ordersView = s.orders
+      .filter((o) => !filt[s.oFilter] || filt[s.oFilter].includes(o.state))
+      .map((o) => ({ ...o, amount: aed(o.amount),
+        glyph: (SERVICES.find((x) => x.slug === o.slug) || SERVICES[0]).glyph,
+        badgeBg: badge[o.state][0], badgeFg: badge[o.state][1],
+        barColor: o.state === 'done' ? '#16A34A' : o.state === 'cancel' ? '#D1D5DB' : GOLD,
+        open: () => this.setState({ curId: o.id, screen: 'orderDetail' }) }));
+
+    const orderTabs = ['الكل','قيد التنفيذ','مكتملة','ملغية'].map((f) => {
+      const on = s.oFilter === f;
+      return { label: f, bg: on ? RED : '#fff', fg: on ? '#fff' : '#374151', bd: on ? RED : '#E5E7EB', pick: () => this.setState({ oFilter: f }) };
+    });
+
+    const raw = s.orders.find((o) => o.id === s.curId) || s.orders[0];
+    const steps = [
+      { title:'تم استلام الطلب', when: raw.date },
+      { title:'تأكيد الدفع', when: raw.state === 'pending' ? 'بانتظار الدفع' : raw.date },
+      { title:'بدء التنفيذ', when: raw.state === 'done' ? 'تم' : raw.state === 'review' ? 'قيد المراجعة' : '—' },
+      { title:'التسليم النهائي', when: raw.state === 'done' ? 'تم التسليم' : 'متوقع قريبًا' },
+    ];
+    const reached = raw.state === 'done' ? 4 : raw.state === 'review' ? 2 : raw.state === 'cancel' ? 1 : 1;
+    const timeline = steps.map((st, i) => {
+      const done = i < reached;
+      return { title: st.title, when: st.when, tick: done ? '✓' : '',
+        dotBg: done ? RED : '#fff', dotBd: done ? RED : '#E5E7EB', tickColor: '#fff',
+        lineColor: i < reached - 1 ? RED : '#E5E7EB', titleColor: done ? '#111827' : '#9CA3AF' };
+    });
+
+    const onTabs = ['home','services','orders','campaigns','account'].includes(s.screen);
+    const tabs = [
+      { key:'home', label:'الرئيسية', glyph:'⌂' },
+      { key:'services', label:'الخدمات', glyph:'▦' },
+      { key:'orders', label:'الطلبات', glyph:'▣' },
+      { key:'campaigns', label:'الحملات', glyph:'↗' },
+      { key:'account', label:'حسابي', glyph:'●' },
+    ].map((x) => ({ ...x, fg: s.screen === x.key ? RED : '#9CA3AF', go: () => this.go(x.key) }));
+
+    const confirm = () => {
+      const id = 'DF-2026-' + Math.floor(100000 + Math.random() * 899999);
+      const o = { id, slug: svc.slug, name: svc.name, pkg: pkg.name, date:'١٩ سبتمبر ٢٠٢٦', amount: totalN, status:'قيد المراجعة', pct:20, note:'بانتظار تعيين مدير الحساب', state:'review', pay: pays.find((p) => p.on).name };
+      this.setState({ orders: [o, ...s.orders], curId: id, screen: 'success' });
+    };
+
+    return {
+      isSplash: s.screen === 'splash', isLogin: s.screen === 'login',
+      showChrome: !['splash','login'].includes(s.screen), showBody: !['splash','login'].includes(s.screen),
+      isHome: s.screen === 'home', isServices: s.screen === 'services', isDetail: s.screen === 'detail',
+      isCheckout: s.screen === 'checkout', isSuccess: s.screen === 'success', isOrders: s.screen === 'orders',
+      isOrderDetail: s.screen === 'orderDetail', isCampaigns: s.screen === 'campaigns',
+      isAccount: s.screen === 'account', isNotifications: s.screen === 'notifications',
+      isCampaignFlow: s.screen === 'campaign', isAssistant: s.screen === 'assistant', isTool: s.screen === 'tool',
+      wizStep1: s.wiz === 1, wizStep2: s.wiz === 2, wizStep3: s.wiz === 3,
+      showWizardBar: s.screen === 'campaign',
+      wizSteps: ['ارفع محتواك','حدد هدفك','تابع النتائج'].map((label, i) => ({
+        label, bar: i < s.wiz ? RED : '#E5E7EB', fg: i < s.wiz ? '#111827' : '#9CA3AF' })),
+      wizLabel: s.wiz === 3 ? 'أرسل الحملة' : 'التالي',
+      wizNext: () => {
+        if (s.wiz < 3) return this.setState({ wiz: s.wiz + 1 });
+        const id = 'DF-2026-' + Math.floor(100000 + Math.random() * 899999);
+        const o = { id, slug:'advertising', name:'حملة ' + (s.projName.trim() || 'بدون اسم'), pkg:'إدارة ' + num(s.days) + ' يوم', date:'١٩ سبتمبر ٢٠٢٦', amount: s.days * 80 + s.days * s.budget, status:'قيد المراجعة', pct:20, note:'بانتظار مراجعة فريق الحملات', state:'review', pay:'بطاقة ···٤٢٩١' };
+        this.setState({ orders: [o, ...s.orders], curId: id, screen: 'success', wiz: 1 });
+      },
+      toggleMedia: () => this.setState({ media: !s.media }),
+      mediaTitle: s.media ? 'تم اختيار الملف' : 'ارفع صورة أو فيديو',
+      mediaNote: s.media ? 'reel-final.mp4 · ١٨ ثانية' : 'MP4 أو JPG · حتى ٦٠ ثانية',
+      mediaBd: s.media ? RED : '#D8DBE0', mediaBg: s.media ? '#FFF5F5' : '#fff',
+      projName: s.projName, onProjName: (e) => this.setState({ projName: e.target.value }),
+      bizTypes: ['مقهى / مطعم','عقارات','عيادة','متجر تجزئة','خدمات'].map((b) => {
+        const on = s.bizType === b;
+        return { label: b, bg: on ? RED : '#fff', fg: on ? '#fff' : '#374151', bd: on ? RED : '#E5E7EB', pick: () => this.setState({ bizType: b }) };
+      }),
+      platforms: [
+        { key:'instagram', label:'Instagram', iconCss:'url("mobile/assets/icons/instagram.png")' },
+        { key:'tiktok', label:'TikTok', iconCss:'url("mobile/assets/icons/tiktok.png")' },
+        { key:'snapchat', label:'Snapchat', iconCss:'url("mobile/assets/icons/snapchat.png")' },
+        { key:'facebook', label:'Facebook', iconCss:'url("mobile/assets/icons/facebook.png")' },
+      ].map((p) => {
+        const on = s.picked.includes(p.key);
+        return { ...p, bd: on ? RED : '#EFF1F4', bg: on ? '#FFF5F5' : '#fff', fg: on ? RED : '#6B7280',
+          toggle: () => this.setState({ picked: on ? s.picked.filter((k) => k !== p.key) : [...s.picked, p.key] }) };
+      }),
+      goals: ['رسائل واتساب','زيارات الموقع','متابعون'].map((g) => {
+        const on = s.goal === g;
+        return { label: g, bg: on ? RED : '#fff', fg: on ? '#fff' : '#374151', bd: on ? RED : '#E5E7EB', pick: () => this.setState({ goal: g }) };
+      }),
+      daysLabel: num(s.days) + ' يوم',
+      daysUp: () => this.setState({ days: Math.min(60, s.days + 1) }),
+      daysDown: () => this.setState({ days: Math.max(3, s.days - 1) }),
+      budget: s.budget, budgetLabel: num(s.budget) + ' د.إ / يوم',
+      onBudget: (e) => this.setState({ budget: +e.target.value }),
+      waNumber: s.waNumber, onWa: (e) => this.setState({ waNumber: e.target.value }),
+      reviewRows: [
+        { k:'المشروع', v: s.projName.trim() || 'بدون اسم' },
+        { k:'نوع النشاط', v: s.bizType },
+        { k:'المنصات', v: s.picked.length ? num(s.picked.length) + ' منصات' : 'لم تُحدد' },
+        { k:'الهدف', v: s.goal },
+        { k:'المدة', v: num(s.days) + ' يوم' },
+        { k:'إدارة الحملة', v: aed(s.days * 80) },
+        { k:'ميزانية الإعلان', v: aed(s.days * s.budget) },
+        { k:'واتساب', v: s.waNumber || 'غير مضاف' },
+      ],
+      campaignTotal: aed(s.days * 80 + s.days * s.budget),
+      forecast: [
+        { k:'وصول متوقع', v: num(Math.round(s.days * s.budget * 31 / 1000)) + 'K' },
+        { k:'نقرات', v: num(Math.round(s.days * s.budget * 0.72).toLocaleString('en-US')) },
+        { k:'تكلفة النقرة', v:'١٫٤ د.إ' },
+      ],
+      messages: s.messages.map((m) => m.who === 'me'
+        ? { text: m.text, align:'flex-start', bg: RED, fg:'#fff', bd: RED }
+        : { text: m.text, align:'flex-end', bg:'#fff', fg:'#111827', bd:'#EFF1F4' }),
+      suggestions: [
+        { q:'كم تكلفة الإعلان؟', a:'إدارة الحملات تبدأ من 80 درهم لليوم، وتُضاف إليها ميزانية الإعلان التي تحددها بنفسك. يمكنك حسابها فورًا من شاشة «أطلق حملتك».' },
+        { q:'كم يستغرق الموقع؟', a:'موقع الأعمال يُسلَّم خلال 7 أيام من اختيار القالب، ويشمل النطاق والاستضافة للسنة الأولى بسعر 599 درهم.' },
+        { q:'ما الفرق بين المتابعين والمشاهدات؟', a:'باقات المتابعين تبني جمهور الحساب على المدى الطويل، أما المشاهدات والإعجابات فتعطي دفعة سريعة لمنشور محدد لزيادة فرص انتشاره.' },
+        { q:'هل لديكم أنظمة إدارة؟', a:'نعم — AMLAK OS لإدارة العقارات والملاك، و Clinic OS لإدارة العيادات والمراكز الطبية. تجدهما في قسم «أنظمة رقمية» بالرئيسية.' },
+      ].map((x) => ({ label: x.q, ask: () => this.setState({ messages: [...s.messages, { who:'me', text: x.q }, { who:'bot', text: x.a }] }) })),
+      toolGlyph: s.tool === 'instagram' ? '◎' : '◌',
+      toolTitle: s.tool === 'instagram' ? 'تحليل Instagram' : 'تحليل الموقع',
+      toolSub: s.tool === 'instagram' ? 'افحص جودة جمهور حساب Instagram' : 'افحص موقعك وعناصره الأساسية',
+      toolPlaceholder: s.tool === 'instagram' ? '@username' : 'https://example.com',
+      toolInput: s.toolInput, onToolInput: (e) => this.setState({ toolInput: e.target.value }),
+      runTool: () => this.setState({ toolDone: true }),
+      toolDone: s.toolDone,
+      toolScore: s.tool === 'instagram' ? '٧٢' : '٦٤',
+      toolScoreTurn: s.tool === 'instagram' ? '0.72turn' : '0.64turn',
+      toolVerdict: s.tool === 'instagram' ? 'جمهور جيد مع فرص تحسين' : 'موقع يحتاج تحسينات أساسية',
+      toolVerdictNote: s.tool === 'instagram'
+        ? 'نسبة التفاعل أعلى من متوسط السوق، لكن معدل النشر منخفض.'
+        : 'السرعة والعناصر الأساسية بحاجة إلى معالجة قبل حملات السيو.',
+      toolRows: s.tool === 'instagram' ? [
+        { k:'نسبة التفاعل', v:'٤٫١٪ — أعلى من المتوسط', tick:'✓', bg:'#DCFCE7', fg:'#15803D' },
+        { k:'جمهور حقيقي', v:'٨٨٪ من المتابعين نشطون', tick:'✓', bg:'#DCFCE7', fg:'#15803D' },
+        { k:'معدل النشر', v:'منشور واحد أسبوعيًا — قليل', tick:'!', bg:'#FEF3C7', fg:'#B45309' },
+        { k:'الريلز', v:'لا توجد ريلز في آخر ٣٠ يوم', tick:'✕', bg:'#FEE2E2', fg:'#B91C1C' },
+      ] : [
+        { k:'سرعة التحميل', v:'٣٫٨ ثانية — بطيء على الجوال', tick:'!', bg:'#FEF3C7', fg:'#B45309' },
+        { k:'التوافق مع الجوال', v:'التصميم متجاوب', tick:'✓', bg:'#DCFCE7', fg:'#15803D' },
+        { k:'عناوين الصفحات', v:'ناقصة في ٦ صفحات', tick:'✕', bg:'#FEE2E2', fg:'#B91C1C' },
+        { k:'Google Business', v:'غير مرتبط بالموقع', tick:'✕', bg:'#FEE2E2', fg:'#B91C1C' },
+      ],
+      goCampaign: () => this.setState({ screen: 'campaign', wiz: 1 }),
+      goAssistant: () => this.go('assistant'),
+      headerTitle: t[0], headerSub: t[1],
+      canBack: !onTabs && !['splash','login','success'].includes(s.screen),
+      showTabs: onTabs, showDetailBar: s.screen === 'detail' || s.screen === 'checkout',
+      onBack: () => {
+        if (s.screen === 'checkout') return this.go('detail');
+        if (s.screen === 'orderDetail') return this.go('orders');
+        if (s.screen === 'campaign' && s.wiz > 1) return this.setState({ wiz: s.wiz - 1 });
+        if (['notifications','campaign','assistant','tool'].includes(s.screen)) return this.setState({ screen: 'home', wiz: 1, toolDone: false });
+        return this.go('services');
+      },
+      goHome: () => this.go('home'), goServices: () => this.go('services'), goOrders: () => this.go('orders'),
+      goCampaigns: () => this.go('campaigns'), goAccount: () => this.go('account'),
+      goNotifications: () => this.go('notifications'), goLogin: () => this.go('login'),
+      doLogin: () => this.go('home'), doLogout: () => this.setState({ screen: 'login', email: '', pass: '' }),
+      email: s.email, pass: s.pass,
+      onEmail: (e) => this.setState({ email: e.target.value }),
+      onPass: (e) => this.setState({ pass: e.target.value }),
+      query: s.query, onQuery: (e) => this.setState({ query: e.target.value }),
+      tabs, listServices, cats, packages, pays, ordersView, orderTabs, timeline,
+      socials: [
+        { iconCss:'url("mobile/assets/icons/instagram.png")' },
+        { iconCss:'url("mobile/assets/icons/tiktok.png")' },
+        { iconCss:'url("mobile/assets/icons/snapchat.png")' },
+        { iconCss:'url("mobile/assets/icons/whatsapp.png")' },
+      ],
+      allServices: SERVICES.map(withOpen),
+      topServices: [5, 4, 3].map((i) => ({ ...SERVICES[i], shot: 'service photo', open: open(i) })),
+      splashFeatures: [
+        { glyph:'▲', label:'نمو مستمر' }, { glyph:'◉', label:'حملات احترافية' },
+        { glyph:'◍', label:'جمهور أكبر' }, { glyph:'▮', label:'نتائج حقيقية' },
+      ],
+      quickActions: [
+        { glyph:'▣', title:'طلباتي', sub:'تابع طلباتك الحالية', go: () => this.go('orders') },
+        { glyph:'◉', title:'إعلان', sub:'ابدأ حملتك الإعلانية', go: () => this.setState({ screen: 'campaign', wiz: 1 }) },
+        { glyph:'◈', title:'مساعد Dubai Fans', sub:'اسأل عن خدماتنا وحلولنا', go: () => this.go('assistant') },
+        { glyph:'↗', title:'حملاتي', sub:'تابع حملاتك ونتائجها', go: () => this.go('campaigns') },
+      ],
+      freeTools: [
+        { glyph:'◎', title:'تحليل Instagram', sub:'افحص جودة جمهور حساب Instagram', go: () => this.setState({ screen:'tool', tool:'instagram', toolDone:false, toolInput:'' }) },
+        { glyph:'◌', title:'تحليل الموقع', sub:'افحص موقعك وعناصره الأساسية', go: () => this.setState({ screen:'tool', tool:'website', toolDone:false, toolInput:'' }) },
+      ],
+      banners: [
+        { bg:'linear-gradient(240deg,#14213D 0%,#0B1120 70%)', eyebrow:'PROPERTY OS · AMLAK OS', title:'نظام متكامل لإدارة العقارات والملاك', sub:'العقارات والوحدات، الملّاك والمستأجرون، العقود والمدفوعات من مكان واحد', cta:'تعرف على النظام' },
+        { bg:'linear-gradient(255deg,#0F2A33 0%,#0B1120 70%)', eyebrow:'MEDICAL OS · Clinic OS', title:'نظام إدارة عيادتك والمراكز الطبية', sub:'الإدخال الصوتي، الروشتة الإلكترونية، ملف المريض وتكامل واتساب', cta:'تعرف على النظام' },
+      ],
+      whySteps: [
+        { n:'1', title:'ارفع محتواك', sub:'صورة أو فيديو وأدخل بيانات مشروعك' },
+        { n:'2', title:'حدد هدفك', sub:'اختر المنصة، المدة والميزانية ورقم الواتساب' },
+        { n:'3', title:'تابع النتائج', sub:'أرسل حملتك وتابع حالتها ونتائجها مباشرة' },
+      ],
+      articles: [
+        { shot:'article cover — AI SEO', title:'خدمات السيو بالذكاء الاصطناعي للشركات الصغيرة منافسة الكبار في ٢٠٢٦' },
+        { shot:'article cover — guide', title:'الدليل ٢٠٢٥: كيف تبني حضورك الرقمي من الصفر' },
+      ],
+      systems: [
+        { os:'PROPERTY OS', brand:'AMLAK OS', title:'نظام متكامل لإدارة العقارات والملاك',
+          desc:'منصة متكاملة لإدارة العقارات والوحدات والملاك والمستأجرين والعقود والمدفوعات والصيانة والقضايا القانونية من مكان واحد.',
+          items:['إدارة العقارات والوحدات','الملّاك والمستأجرون','العقود والتجديدات','المدفوعات والتحصيل'] },
+        { os:'MEDICAL OS', brand:'Clinic OS', title:'نظام إدارة عيادتك والمراكز الطبية',
+          desc:'نظام إداري ذكي يساعد العيادات والمراكز الطبية على إدارة المرضى والحجوزات والماليات والمخزون والتواصل مع المرضى.',
+          items:['الإدخال الصوتي والذكاء اللغوي','تكامل واتساب المتقدم','الروشتة الإلكترونية الذكية','ملف المريض الذكي'] },
+      ],
+      partners: ['partner logo — Al Abdulghani Motors','partner logo — Herman','partner logo — Zain','partner logo — Malabar'],
+      stats: [
+        { label:'مشاهدات', value:'١٢٨.٤K', delta:'+١٢٪', iconCss:'url("mobile/assets/views.png")' },
+        { label:'عملاء محتملون', value:'٣٤٢', delta:'+٨٪', iconCss:'url("mobile/assets/leads.png")' },
+        { label:'مبيعات', value:'٤٨٬٢٠٠ د.إ', delta:'+٢١٪', iconCss:'url("mobile/assets/sales.png")' },
+        { label:'زيارات الموقع', value:'٩.٨K', delta:'+٥٪', iconCss:'url("mobile/assets/website-visits.png")' },
+      ],
+      campaigns: [
+        { name:'حملة إدارة الإعلانات — 30 يوم', status:'نشطة', meta:'Instagram · Snapchat · اليوم ١٨ من ٣٠',
+          kpis:[{k:'وصول',v:'٢١٤K'},{k:'نقرات',v:'٦٬١٢٠'},{k:'تكلفة النقرة',v:'١٫٤ د.إ'}] },
+        { name:'حملة ريلز — التصوير وصناعة المحتوى', status:'قيد المراجعة', meta:'TikTok · ١٠ مقاطع',
+          kpis:[{k:'مشاهدات',v:'٨٨K'},{k:'تفاعل',v:'٧٫٢٪'},{k:'حفظ',v:'١٬٩٤٠'}] },
+      ],
+      notifications: [
+        { id:'DF-2026-408377', title:'قيد المراجعة', body:'الطلب DF-2026-408377 قيد المراجعة.', date:'١٥ سبتمبر ٢٠٢٦', glyph:'◌', iconBg:'#F3F4F6', iconFg:'#4B5563' },
+        { id:'DF-2026-201650', title:'ملغي', body:'تم إلغاء الطلب DF-2026-201650.', date:'١٤ سبتمبر ٢٠٢٦', glyph:'✕', iconBg:'#FEE2E2', iconFg:'#B91C1C' },
+        { id:'DF-2026-802682', title:'ملغي', body:'تم إلغاء الطلب DF-2026-802682.', date:'١٤ سبتمبر ٢٠٢٦', glyph:'✕', iconBg:'#FEE2E2', iconFg:'#B91C1C' },
+        { id:'DF-2026-964363', title:'ملغي', body:'تم إلغاء الطلب DF-2026-964363.', date:'١٤ سبتمبر ٢٠٢٦', glyph:'✕', iconBg:'#FEE2E2', iconFg:'#B91C1C' },
+        { id:'DF-2026-941828', title:'مكتمل', body:'تم إكمال الطلب DF-2026-941828 بنجاح.', date:'١٤ سبتمبر ٢٠٢٦', glyph:'✓', iconBg:'#DCFCE7', iconFg:'#15803D' },
+      ],
+      personal: [
+        { k:'الاسم', v:'mahmoudterk', color:'#111827' },
+        { k:'البريد الإلكتروني', v:'mahmoudterk2@gmail.com', color:'#111827' },
+        { k:'رقم الهاتف', v:'+٩٧١٥٦٨٩٥٢٧٧٥', color:'#111827' },
+      ],
+      business: [
+        { k:'اسم الشركة', v:'غير مضاف', color:'#9CA3AF' },
+        { k:'نوع النشاط', v:'غير مضاف', color:'#9CA3AF' },
+        { k:'الموقع الإلكتروني', v:'غير مضاف', color:'#9CA3AF' },
+        { k:'Snapchat', v:'غير مضاف', color:'#9CA3AF' },
+        { k:'Google Business', v:'غير مضاف', color:'#9CA3AF' },
+      ],
+      support: [
+        { label:'Email', color:'#111827' }, { label:'Phone', color:'#111827' }, { label:'WhatsApp', color:'#16A34A' },
+      ],
+      svcName: svc.name, svcTag: svc.tag, svcDesc: svc.desc, svcPerks: svc.perks, svcGlyph: svc.glyph,
+      pkgName: pkg.name, pkgPrice: quote ? 'حسب الطلب' : aed(pkg.p),
+      vat: quote ? '—' : aed(Math.round(pkg.p * 0.05)),
+      total: quote ? 'عرض سعر' : aed(totalN),
+      primaryLabel: s.screen === 'detail' ? (quote ? 'اطلب عرض سعر' : 'متابعة الطلب') : 'تأكيد الطلب',
+      primaryAction: s.screen === 'detail' ? () => this.go('checkout') : confirm,
+      newOrderId: s.curId,
+      curOrder: { ...raw, amount: aed(raw.amount) },
+    };
+  }
+}
+</script>
+</body>
+</html>
