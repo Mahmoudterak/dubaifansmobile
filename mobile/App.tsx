@@ -26,7 +26,6 @@ import { Dimensions,
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import * as ImagePicker from 'expo-image-picker';
 import * as WebBrowser from 'expo-web-browser';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
 import {
   AuthUser,
@@ -139,14 +138,6 @@ function statusLabel(status: string) {
   };
   return labels[status] || status;
 }
-
-GoogleSignin.configure({
-  webClientId:
-    '177641611395-3p2pi9vti88gfj86v8pinot0ha9u3so2.apps.googleusercontent.com',
-  iosClientId:
-    '177641611395-i8780kopnsl9rcfbe4rj6k2da816tvcm.apps.googleusercontent.com',
-});
-
 
 function AnimatedSplashScreen({ onFinish }: { onFinish: () => void }) {
   const opacity = useRef(new Animated.Value(0)).current;
@@ -761,6 +752,15 @@ function LoginScreen({
     setLoading(true);
 
     try {
+      const { GoogleSignin } = require('@react-native-google-signin/google-signin');
+
+      GoogleSignin.configure({
+        webClientId:
+          '177641611395-3p2pi9vti88gfj86v8pinot0ha9u3so2.apps.googleusercontent.com',
+        iosClientId:
+          '177641611395-i8780kopnsl9rcfbe4rj6k2da816tvcm.apps.googleusercontent.com',
+      });
+
       await GoogleSignin.hasPlayServices({
         showPlayServicesUpdateDialog: true,
       });

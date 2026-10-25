@@ -19,7 +19,12 @@
     "plugins": [
       "expo-secure-store",
       "expo-web-browser",
-      "@react-native-google-signin/google-signin"
+      [
+        "@react-native-google-signin/google-signin",
+        {
+          "iosUrlScheme": "com.googleusercontent.apps.177641611395-i8780kopnsl9rcfbe4rj6k2da816tvcm"
+        }
+      ]
     ],
     "scheme": "dubaifans",
     "extra": {
